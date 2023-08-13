@@ -1,14 +1,25 @@
 :root {
-    --color-background: rgb(40 40 40);
+    --color-background: rgb(20 20 20);
+    --color-background-center: rgb(40 40 40);
     --color-orange: rgb(255 191 0);
     --color-purple: rgb(191 0 255);
     --color-shadow: rgb(255 255 255 / 33%);
 }
 body {
-    background-color: var(--color-background);
     color: white;
     font-family: monospace;
     text-shadow: var(--color-shadow) 0 0 1em, black 0 0 0.1em;
+    background:
+        var(--color-background)
+        linear-gradient(
+            90deg,
+            var(--color-background) 0%,
+            var(--color-background-center) 50%,
+            var(--color-background) 100%
+        )
+        repeat-y
+        center;
+    background-size: 960px 100%;
 }
 a {
     color: var(--color-purple);
