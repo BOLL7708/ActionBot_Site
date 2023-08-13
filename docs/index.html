@@ -9,28 +9,39 @@
 <body>
 <div class="container">
     <div class="logo">
-        <span>🎩</span><span class="start">des</span><span class="end">bot</span>
+        <span>🎩</span><span class="start"><span class="d">d</span><span class="e">e</span><span class="s">s</span></span><span class="end"><span class="b">b</span><span class="o">o</span><span class="t">t</span></span>
     </div>
     <div class="box">
         <h2>Questions & Answers</h2>
         <p><strong>Q:</strong> What is it?<br/><strong>A:</strong> Desbot is a bot for <a href="https://www.twitch.tv/" target="_blank">Twitch</a> streamers that can handle chat interactions, rewards and more.</p>
         <p><strong>Q:</strong> What is the current status?</br><strong>A:</strong> It's currently released as a pre-alpha version, this means major changes will still occur.</p>
-        <p><strong>Q:</strong> Where can I get it?<br/><strong>A:</strong>Get the latest release over at <a href="https://github.com/boll7708/desbot">github</a>.</p>
+        <p><strong>Q:</strong> Where can I get it?<br/><strong>A:</strong>Get the latest release over at <a href="https://github.com/boll7708/desbot">Github</a>.</p>
     </div>
     <div class="box">
-        <h2>Current Form</h2>
+        <h2>History</h2>
         <p>Desbot started out as a project called "Streaming Widget", as it was a single browser source in OBS that could play back audio and show media on screen.</p>
         <p>Over time, the project scope expanded, and it is no longer suitable to be called a widget, so it has now been renamed to a bot. The project is still running as a single browser source but that is also planned to change.</p>
+    </div>
+    <div class="box">
+        <h2>Present Form</h2>
         <p>The main features handled by this bot are as follows:</p>
         <ul>
             <li>Can read Twitch chat, uses this for commands, text to speech through <a href="https://cloud.google.com/text-to-speech" target="_blank">Google</a>, logging and overlays.</li>
             <li>Can handle Twitch rewards, this means create and update rewards, listen to redemptions and trigger things to happen.</li>
-            <li>Post things to <a href="https://discord.com/" target="_blank">Discord</a>, like chat log, redemptions and screenshots.</li>
+            <li>Can manage Twitch roles, title and category, like setting the game category based on currently running game.
+            <li>Can post things to <a href="https://discord.com/" target="_blank">Discord</a>, like chat log, redemptions and screenshots.</li>
             <li>Can connect to <a href="https://obsproject.com/" target="_blank">OBS Studio</a>, mainly toggle sources and filters and take screenshots.</li>
             <li>Can connect to <a href="https://steampowered.com/" target="_blank">Steam</a> to get currently played game, game meta data and achievements.</li>
             <li>Can connect to VR accessories like <a href="https://github.com/BOLL7708/OpenVR2WS" target="_blank">OpenVR2WS</a>, <a href="https://github.com/BOLL7708/OpenVRNotificationPipe" target="_blank">OpenVRNotificationPipe</a> and <a href="https://github.com/BOLL7708/SuperScreenShotterVR" target="_blank">SuperScreenShotterVR</a>.</li>
-
+            <li>Can connect to a <a href="https://www.philips-hue.com/" target="_blank">Philips Hue</a> bridge to control bulbs and sockets.</li>
+            <li>Can send key combinations or mouse clicks to arbitrary applications on your system through <a href="https://www.autoitscript.com/" target="_blank">AutoIt</a>.</li>
         </ul>
+    </div>
+    <div class="box">
+        <h2>Current Work</h2>
+        <p>Since almost a year back work has been put in to convert the previously hard-coded configs to database-stored entries as well as a browser based editor for all settings.</p>
+        <p>This work is nearing completion, with almost full feature retention, but there will need to be some additional systems built out after the initial release, like the dashboard.</p>
+        <p>If you want to follow along with that is happening, there is a public Trello workspace <a href="https://trello.com/w/desbot_app" target="_blank">here</a>, which is not updated very often as the current task is gargantuan, it will be more useful in the future.</p>
     </div>
     <div class="box">
         <h2>Future Plans</h2>
