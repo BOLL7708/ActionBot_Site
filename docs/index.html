@@ -11,8 +11,34 @@
     <div class="logo">
         <span>🎩</span><span class="start">des</span><span class="end">bot</span>
     </div>
-    <p>desbot is a bot for Twitch streamers</p>
-    <p>it is currently an alpha release</p>
-    <p>find out more at <a href="https://github.com/boll7708/desbot">github</a></p>
+    <div class="box">
+        <h2>Questions & Answers</h2>
+        <p><strong>Q:</strong> What is it?<br/><strong>A:</strong> Desbot is a bot for <a href="https://www.twitch.tv/" target="_blank">Twitch</a> streamers that can handle chat interactions, rewards and more.</p>
+        <p><strong>Q:</strong> What is the current status?</br><strong>A:</strong> It's currently released as a pre-alpha version, this means major changes will still occur.</p>
+        <p><strong>Q:</strong> Where can I get it?<br/><strong>A:</strong>Get the latest release over at <a href="https://github.com/boll7708/desbot">github</a>.</p>
+    </div>
+    <div class="box">
+        <h2>Current Form</h2>
+        <p>Desbot started out as a project called "Streaming Widget", as it was a single browser source in OBS that could play back audio and show media on screen.</p>
+        <p>Over time, the project scope expanded, and it is no longer suitable to be called a widget, so it has now been renamed to a bot. The project is still running as a single browser source but that is also planned to change.</p>
+        <p>The main features handled by this bot are as follows:</p>
+        <ul>
+            <li>Can read Twitch chat, uses this for commands, text to speech through <a href="https://cloud.google.com/text-to-speech" target="_blank">Google</a>, logging and overlays.</li>
+            <li>Can handle Twitch rewards, this means create and update rewards, listen to redemptions and trigger things to happen.</li>
+            <li>Post things to <a href="https://discord.com/" target="_blank">Discord</a>, like chat log, redemptions and screenshots.</li>
+            <li>Can connect to <a href="https://obsproject.com/" target="_blank">OBS Studio</a>, mainly toggle sources and filters and take screenshots.</li>
+            <li>Can connect to <a href="https://steampowered.com/" target="_blank">Steam</a> to get currently played game, game meta data and achievements.</li>
+            <li>Can connect to VR accessories like <a href="https://github.com/BOLL7708/OpenVR2WS" target="_blank">OpenVR2WS</a>, <a href="https://github.com/BOLL7708/OpenVRNotificationPipe" target="_blank">OpenVRNotificationPipe</a> and <a href="https://github.com/BOLL7708/SuperScreenShotterVR" target="_blank">SuperScreenShotterVR</a>.</li>
+
+        </ul>
+    </div>
+    <div class="box">
+        <h2>Future Plans</h2>
+        <p>There will be a transition from running as a webpage requiring a local webserver with PHP and MySQL to running mainly in <a href="https://nodejs.org/" target="_blank">Node.JS</a>, this as a lot of the code is the backend that handles all communication. There will still be one or more components that are loaded as browser sources, but those will only be for presentation; to provide overlay elements, video and audio playback.</p>
+        <p>This transition will also see a move from MySQL as the database to SQLite, this to make this project entirely portable instead of relying on locally installed services. This also includes moving away from PHP as the page templating system and hosting the whole webserver through the same Node.JS instance.</p>
+        <p>Before all this happens the bot will be worked into a stable state with all the existing features working in the current database, which is the conversion that is taking place right now, moving from hard-coded configuration files to a full on database-connected editor. One thing at a time though.</p>
+    </div>
+    <p>&nbsp;</p>
+</div>
 </body>
 </html>

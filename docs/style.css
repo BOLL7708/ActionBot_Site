@@ -1,34 +1,68 @@
 :root {
     --animation-duration: 2s;
     --animation-delay: 1s;
+    --color-background: rgb(40 40 40);
+    --color-orange: rgb(255 191 0);
+    --color-purple: rgb(191 0 255);
+    --color-shadow: rgb(255 255 255 / 33%);
 }
 body {
-    background-color: gray;
+    background-color: var(--color-background);
     color: white;
     font-family: monospace;
+    text-shadow: var(--color-shadow) 0 0 1em;
 }
 a {
-    color: purple;
+    color: var(--color-purple);
 }
 a:hover {
-    color: orange;
+    color: var(--color-orange);
 }
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     height: 100vh;
-    text-shadow: #00000040 0 0 1em;
-
 }
+
+/* Logo */
 .logo {
     font-weight: bold;
     font-size: 500%;
 }
 .logo .start {
-    color: purple;
+    color: var(--color-purple);
 }
 .logo .end {
-    color: orange;
+    color: var(--color-orange);
+}
+
+/* Titles */
+h2, .title {
+    font-size: 150%;
+    margin: 0.25em 0;
+}
+
+/* Boxes */
+.box {
+    box-sizing: border-box;
+    margin: 1em;
+    padding: 1em;
+    width: 640px;
+    border-radius: 1em;
+    box-shadow: var(--color-shadow) 0 0 1em;
+}
+.box p {
+    margin: 0.5em;
+}
+.box:nth-of-type(even) {
+    border: 3px solid var(--color-purple);
+}
+.box:nth-of-type(odd) {
+    border: 3px solid var(--color-orange);
+}
+@media (max-width: 680px) {
+    .box {
+        width: 100%;
+    }
 }
