@@ -35,24 +35,31 @@ a:hover {
 }
 
 /* Logo */
+.logo-img {
+    width: 6em;
+    font-size: 250%;
+    filter: drop-shadow(0 0 1em var(--color-shadow));
+}
 .logo {
+    margin-top: -0.125em;
     font-weight: bold;
     font-size: 500%;
 }
 @keyframes Bob {
     0% {
-        transform: translateY(0em);
+        transform: translateY(-0.1em);
     }
     100% {
-        transform: translateY(-0.2em);
+        transform: translateY(0.1em);
     }
 }
-.logo .start *, .logo .end * {
+.logo .start *, .logo .end *, .logo-img {
     margin: 0;
     padding: 0;
     border: 0;
     display: inline-block;
     animation: Bob 2s ease-in-out 0s infinite alternate;
+    transform: translateY(-0.1em);
 }
 .logo .d { animation-delay: 0ms; }
 .logo .e { animation-delay: 200ms; }
