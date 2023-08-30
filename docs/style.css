@@ -92,6 +92,10 @@ h2 {
     width: 640px;
     border-radius: 1em;
     box-shadow: var(--color-glow) 0 0 1em;
+    transition: box-shadow .3s ease-in-out;
+}
+.box:hover {
+    box-shadow: var(--color-glow) 0 0 2em;
 }
 .box p {
     margin: 0.5em;
