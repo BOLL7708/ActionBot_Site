@@ -17,11 +17,22 @@
    <rect id="tooth" x="0" y="0" width="20" height="20" class="purple" />
    <g id="mouth">
     <path d="M20 0 L140 0 A20 20,0,0 1,140 40 L20 40 A20 20,0,0 1,20 0 Z" class="orange"/>
-	<path d="M20 10 L30 10 L30 30 L20 30 A10 10,0,0 1,20 10 Z" class="purple" />
-    <use href="#tooth" x="40" y="10" />
-    <use href="#tooth" x="70" y="10" />
-    <use href="#tooth" x="100" y="10" />
-    <path d="M130 10 L140 10 A10 10,0,0 1,140 30 L130 30 Z" class="purple" />
+	<!-- TEETH -->
+	<path d="M20 10 L30 10 L30 30 L20 30 A10 10,0,0 1,20 10 Z" class="purple">
+		<animate id="t1" attributeName="fill-opacity" values="1;0;0;0;1" dur="100ms" begin="40s;t1.end+40s" />
+	</path>
+    <use href="#tooth" x="40" y="10">
+		<animate id="t2" attributeName="fill-opacity" values="1;0;0;0;1" dur="100ms" begin="40050ms;t2.end+40s" />
+	</use>
+    <use href="#tooth" x="70" y="10">
+		<animate id="t3" attributeName="fill-opacity" values="1;0;0;0;1" dur="100ms" begin="40100ms;t3.end+40s" />
+	</use>
+    <use href="#tooth" x="100" y="10">
+		<animate id="t4" attributeName="fill-opacity" values="1;0;0;0;1" dur="100ms" begin="40150ms;t4.end+40s" />
+	</use>
+    <path d="M130 10 L140 10 A10 10,0,0 1,140 30 L130 30 Z" class="purple">
+		<animate id="t5" attributeName="fill-opacity" values="1;0;0;0;1" dur="100ms" begin="40200ms;t5.end+40s" />
+	</path>
    </g>
    
    <!-- EYE -->
