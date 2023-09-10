@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Scripts -->
+    <script src="scripts/site.js"></script>
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="16x16" href="media/desbot_logo_16.png" />
     <link rel="icon" type="image/svg+xml" href="media/desbot_logo.svg" />
@@ -16,20 +18,24 @@
     <title>desbot</title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
-<body>
+<body onload="Site.run()">
 <div class="container">
-    <div class="logo-container">
-        <div>
-            <img src="media/desbot_logo.svg" alt="desbot logo" class="logo-img"/>
+    <div class="big header-container">
+        <div class="box" id="info-left">Loading...</div>
+        <div class="logo-container">
+            <div>
+                <img src="media/desbot_logo.svg" alt="desbot logo" class="logo-img"/>
+            </div>
+            <div class="logo">
+                <span class="start"><span class="d">d</span><span class="e">e</span><span class="s">s</span></span><span class="end"><span class="b">b</span><span class="o">o</span><span class="t">t</span></span>
+            </div>
+            <div class="version">
+                <span>pre-alpha</span>
+            </div>
         </div>
-        <div class="logo">
-            <span class="start"><span class="d">d</span><span class="e">e</span><span class="s">s</span></span><span class="end"><span class="b">b</span><span class="o">o</span><span class="t">t</span></span>
-        </div>
-        <div class="version">
-            <span>pre-alpha</span>
-        </div>
+        <div class="box" id="info-right">Loading...</div>
     </div>
-    <div class="box">
+    <div class="big box">
         <h2>Questions & Answers</h2>
         <p><strong>Q:</strong> What is it?<br/><strong>A:</strong> Desbot is a bot for <a href="https://www.twitch.tv/" target="_blank">Twitch</a> streamers that can handle chat interactions, rewards and more.</p>
         <p><strong>Q:</strong> What is the current status?<br/><strong>A:</strong> It is currently released as a pre-alpha version, this means major breaking changes will still occur, but I try to make those transitions as painless as possible.</p>
@@ -37,12 +43,12 @@
         <p><strong>Q:</strong> Where can I talk about it?<br/><strong>A:</strong> There is a an official <a href="https://discord.gg/St6BHXG37N" target="_blank">Discord server</a>  and <a href="https://reddit.com/r/desbot" target="_blank">subreddit</a> for that. Both of these places are very new and mostly exist as placeholders for now.</p>
         <p><strong>Q:</strong> Where can I see what is worked on?<br/><strong>A:</strong> There is a public <a href="https://trello.com/w/desbot_app" target="_blank">Trello workspace</a>, it will be utilized more when this current gargantuan task is complete.</p>
     </div>
-    <div class="box">
+    <div class="big box">
         <h2>History</h2>
         <p>Desbot started out as a project called "Streaming Widget", as it was a single browser source in OBS that could play back audio and show media on screen.</p>
         <p>Over time, the project scope expanded, and it is no longer suitable to be called a widget, so it has now been reborn as a bot. The project is still running as a single browser source but that is also planned to change.</p>
     </div>
-    <div class="box">
+    <div class="big box">
         <h2>Present Form</h2>
         <p>The main features handled by this bot are as follows:</p>
         <ul>
@@ -57,12 +63,12 @@
             <li>Can send key combinations or mouse clicks to arbitrary applications on your system through <a href="https://www.autoitscript.com/" target="_blank">AutoIt</a>.</li>
         </ul>
     </div>
-    <div class="box">
+    <div class="big box">
         <h2>Current Work</h2>
         <p>Since almost a year back work has been put in to convert the previously hard-coded configs to database-stored entries as well as a browser based editor for all settings.</p>
         <p>This work is nearing completion, with almost full feature retention, but there will need to be some additional systems built out after the initial release, like the dashboard.</p>
     </div>
-    <div class="box">
+    <div class="big box">
         <h2>Future Plans</h2>
         <p>There will be a transition from running as a webpage requiring a local webserver with PHP and MySQL to running mainly in <a href="https://nodejs.org/" target="_blank">Node.JS</a>, this as a lot of the code is the backend that handles all communication. There will still be one or more components that are loaded as browser sources, but those will only be for presentation; to provide overlay elements, video and audio playback.</p>
         <p>This transition will also see a move from MySQL as the database to SQLite, this to make this project entirely portable instead of relying on locally installed services. This also includes moving away from PHP as the page templating system and hosting the whole webserver through the same Node.JS instance.</p>

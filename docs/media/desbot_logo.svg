@@ -26,19 +26,19 @@
     <path d="M20 0 L140 0 A20 20,0,0 1,140 40 L20 40 A20 20,0,0 1,20 0 Z" class="orange"/>
 	<!-- TEETH -->
 	<path d="M20 10 L30 10 L30 30 L20 30 A10 10,0,0 1,20 10 Z" class="purple">
-		<animate id="t1" attributeName="fill-opacity" values="1;0;0;0;1" dur="100ms" begin="40s;t1.end+40s" />
+		<animate id="t1" attributeName="fill-opacity" values="1;0;0;0;1" dur="100ms" begin="36s;t1.end+36s" />
 	</path>
     <use href="#tooth" x="40" y="10">
-		<animate id="t2" attributeName="fill-opacity" values="1;0;0;0;1" dur="100ms" begin="40050ms;t2.end+40s" />
+		<animate id="t2" attributeName="fill-opacity" values="1;0;0;0;1" dur="100ms" begin="36050ms;t2.end+36s" />
 	</use>
     <use href="#tooth" x="70" y="10">
-		<animate id="t3" attributeName="fill-opacity" values="1;0;0;0;1" dur="100ms" begin="40100ms;t3.end+40s" />
+		<animate id="t3" attributeName="fill-opacity" values="1;0;0;0;1" dur="100ms" begin="36100ms;t3.end+36s" />
 	</use>
     <use href="#tooth" x="100" y="10">
-		<animate id="t4" attributeName="fill-opacity" values="1;0;0;0;1" dur="100ms" begin="40150ms;t4.end+40s" />
+		<animate id="t4" attributeName="fill-opacity" values="1;0;0;0;1" dur="100ms" begin="36150ms;t4.end+36s" />
 	</use>
     <path d="M130 10 L140 10 A10 10,0,0 1,140 30 L130 30 Z" class="purple">
-		<animate id="t5" attributeName="fill-opacity" values="1;0;0;0;1" dur="100ms" begin="40200ms;t5.end+40s" />
+		<animate id="t5" attributeName="fill-opacity" values="1;0;0;0;1" dur="100ms" begin="36200ms;t5.end+36s" />
 	</path>
    </g>
    
@@ -48,7 +48,7 @@
     <circle cx="0" cy="0" r="20" class="purple" />
 	<circle cx="0" cy="0" r="10" class="orange">
 	 <animate id="op" attributeName="fill-opacity" values="1;0;0;1" dur="100ms" begin="24s;op.end+24s" />
-	 <animate id="pos" attributeName="cy" values="0;5;5;5;5;5;5;0" dur="750ms" begin="32s;pos.end+32s" />
+	 <animate id="pos" attributeName="cy" values="0;5;5;5;5;5;5;0" dur="750ms" begin="30s;pos.end+30s" />
 	</circle>
    </g>
   </defs>
@@ -62,7 +62,7 @@
   <use href="#tips" x="25" y="20" /> 
   <!-- jewel -->
   <circle cx="125" cy="60" r="10" class="purple">
-	<animate id="j" attributeName="fill-opacity" values="1;0;1;0;1;0;1;0;1;0;1" dur="1s" begin="48s;j.end+48s" />
+	<animate id="j" attributeName="fill-opacity" values="1;0;1;0;1;0;1;0;1;0;1" dur="1s" begin="42s;j.end+42s" />
   </circle>
   
   <!-- FACE -->
