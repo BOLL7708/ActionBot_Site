@@ -147,7 +147,7 @@ h2 {
     border: 3px solid var(--color-orange);
 }
 @media (max-width: 680px) {
-    .big .box {
+    .big.box {
         width: 100%;
     }
     .header-container {
