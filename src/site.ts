@@ -5,8 +5,8 @@ class Site {
         return void 0
     }
     static async loadReleaseData() {
-        const infoLeft = document.getElementById('info-left') as HTMLDivElement
-        const infoRight = document.getElementById('info-right') as HTMLDivElement
+        const infoLeft = document.querySelector('.box.left') as HTMLDivElement
+        const infoRight = document.querySelector('.box.right') as HTMLDivElement
         const url = 'https://api.github.com/repos/boll7708/desbot/releases'
         const response = await fetch(url)
         if(response.ok) {

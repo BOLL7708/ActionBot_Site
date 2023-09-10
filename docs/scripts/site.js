@@ -57,8 +57,8 @@ var Site = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        infoLeft = document.getElementById('info-left');
-                        infoRight = document.getElementById('info-right');
+                        infoLeft = document.querySelector('.box.left');
+                        infoRight = document.querySelector('.box.right');
                         url = 'https://api.github.com/repos/boll7708/desbot/releases';
                         return [4 /*yield*/, fetch(url)];
                     case 1:
