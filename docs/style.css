@@ -28,20 +28,15 @@ a {
     color: var(--color-orange);
     margin: 0 -2pt;
     padding: 0 2pt;
-    transition: color .3s ease-in-out, box-shadow .3s ease-in-out, text-shadow .3s ease-in-out;
 }
 a:hover {
     color: var(--color-purple);
-    box-shadow: inset 250pt 0 0 0 var(--color-orange);
-    /*text-shadow: none;*/
+    background-color: var(--color-orange);
 }
 .container, .logo-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-.container {
-
 }
 .logo-container {
     padding: 0 10pt;
