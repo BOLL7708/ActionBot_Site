@@ -140,6 +140,27 @@ h2 {
 .box:nth-of-type(odd) {
     border: 2.5pt solid var(--color-orange);
 }
+
+/* Background */
+.logo-bg {
+    display: none;
+    position: fixed;
+    top: calc(50% - 260pt);
+}
+.logo-bg > img {
+    filter: blur(10pt) saturate(0.5);
+    opacity: 0.25;
+    width: 520pt;
+    height: 520pt;
+}
+.logo-bg.left {
+    left: -260pt;
+}
+.logo-bg.right {
+    right: -260pt;
+}
+
+/* Responsive */
 @media (max-width: 520pt) {
     .big.box {
         width: 100%;
@@ -163,5 +184,10 @@ h2 {
     .box.right {
         order: 3;
         margin-top: 10pt;
+    }
+}
+@media (min-width: 1040pt) {
+    .logo-bg {
+        display: block;
     }
 }
