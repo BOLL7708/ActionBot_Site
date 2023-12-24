@@ -1,49 +1,72 @@
 class Site {
+    static _infoLeft: HTMLDivElement
+    static _infoRight: HTMLDivElement
     static async run() {
         console.log('Site is running!')
+        this._infoLeft = document.querySelector('.box.left') as HTMLDivElement
+        this._infoRight = document.querySelector('.box.right') as HTMLDivElement
         await this.loadReleaseData()
         return void 0
     }
     static async loadReleaseData() {
-        const infoLeft = document.querySelector('.box.left') as HTMLDivElement
-        const infoRight = document.querySelector('.box.right') as HTMLDivElement
+        const cached = this.getCachedResponse()
+        if(cached) {
+            console.log('Using cached release!')
+            this.updateBoxes(cached)
+        }
         const url = 'https://api.github.com/repos/boll7708/desbot/releases'
         const response = await fetch(url)
         if(response.ok) {
             const releases = await response.json() as IRelease[]
             if(releases) {
                 const latest = releases.reduce((a, b) => a.id > b.id ? a : b)
-                this.setInfo(infoLeft, [
-                    '<h2>Latest release</h2>',
-                    `Link: <a href="${latest.html_url}">${latest.tag_name}</a>`,
-                    `Title: ${latest.name}`,
-                    'Date: '+new Date(latest.published_at).toISOString().split('T')[0],
-                    'Pre-release: '+(latest.prerelease ? 'Yes' : 'No'),
-                    `Source: <a href="${latest.zipball_url}">.zip</a>, <a href="${latest.tarball_url}">.tar</a>`
-                ])
-                this.setInfo(infoRight, [
-                    '<h2>Maintainer</h2>',
-                    `Profile: <a href="${latest.author.html_url}">${latest.author.login}</a> <img src="${latest.author.avatar_url}" alt="Avatar" width="16" height="16">`
-                ])
+                this.setCachedResponse(latest)
+                this.updateBoxes(latest)
             } else {
                 const message = 'Failed to decode release data from GitHub'
                 console.warn(message)
-                this.setError(infoLeft, message)
-                this.setError(infoRight, message)
+                if(!cached) {
+                    this.setError(this._infoLeft, message)
+                    this.setError(this._infoRight, message)
+                }
             }
         } else {
             const message = 'Failed to load release data from GitHub'
             console.warn(message)
-            this.setError(infoLeft, message)
-            this.setError(infoRight, message)
+            if(!cached) {
+                this.setError(this._infoLeft, message)
+                this.setError(this._infoRight, message)
+            }
         }
         return true
+    }
+    static updateBoxes(release: IRelease) {
+        this.setInfo(this._infoLeft, [
+            '<h2>Latest release</h2>',
+            `Link: <a href="${release.html_url}">${release.tag_name}</a>`,
+            `Title: ${release.name}`,
+            'Date: '+new Date(release.published_at).toISOString().split('T')[0],
+            'Pre-release: '+(release.prerelease ? 'Yes' : 'No'),
+            `Source: <a href="${release.zipball_url}">.zip</a>, <a href="${release.tarball_url}">.tar</a>`
+        ])
+        this.setInfo(this._infoRight, [
+            '<h2>Maintainer</h2>',
+            `Profile: <a href="${release.author.html_url}">${release.author.login}</a> <img src="${release.author.avatar_url}" alt="Avatar" width="16" height="16">`
+        ])
     }
     static setInfo(info: HTMLDivElement, lines: string[]) {
         info.innerHTML = '<p>'+lines.join('<p/><p>')+'</p>'
     }
     static setError(element: HTMLDivElement, message?: string) {
         element.innerHTML = message ?? 'Failed to load release data from GitHub'
+    }
+    static setCachedResponse(release: IRelease) {
+        localStorage.setItem('release', JSON.stringify(release))
+    }
+    static getCachedResponse(): IRelease|null {
+        const text = localStorage.getItem('release')
+        if(!text) return null
+        return JSON.parse(text) as IRelease
     }
 }
 

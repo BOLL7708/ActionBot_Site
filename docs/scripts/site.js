@@ -43,6 +43,8 @@ var Site = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         console.log('Site is running!');
+                        this._infoLeft = document.querySelector('.box.left');
+                        this._infoRight = document.querySelector('.box.right');
                         return [4 /*yield*/, this.loadReleaseData()];
                     case 1:
                         _a.sent();
@@ -53,12 +55,15 @@ var Site = /** @class */ (function () {
     };
     Site.loadReleaseData = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var infoLeft, infoRight, url, response, releases, latest, message, message;
+            var cached, url, response, releases, latest, message, message;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        infoLeft = document.querySelector('.box.left');
-                        infoRight = document.querySelector('.box.right');
+                        cached = this.getCachedResponse();
+                        if (cached) {
+                            console.log('Using cached release!');
+                            this.updateBoxes(cached);
+                        }
                         url = 'https://api.github.com/repos/boll7708/desbot/releases';
                         return [4 /*yield*/, fetch(url)];
                     case 1:
@@ -69,42 +74,59 @@ var Site = /** @class */ (function () {
                         releases = _a.sent();
                         if (releases) {
                             latest = releases.reduce(function (a, b) { return a.id > b.id ? a : b; });
-                            this.setInfo(infoLeft, [
-                                '<h2>Latest release</h2>',
-                                "Link: <a href=\"".concat(latest.html_url, "\">").concat(latest.tag_name, "</a>"),
-                                "Title: ".concat(latest.name),
-                                'Date: ' + new Date(latest.published_at).toISOString().split('T')[0],
-                                'Pre-release: ' + (latest.prerelease ? 'Yes' : 'No'),
-                                "Source: <a href=\"".concat(latest.zipball_url, "\">.zip</a>, <a href=\"").concat(latest.tarball_url, "\">.tar</a>")
-                            ]);
-                            this.setInfo(infoRight, [
-                                '<h2>Maintainer</h2>',
-                                "Profile: <a href=\"".concat(latest.author.html_url, "\">").concat(latest.author.login, "</a> <img src=\"").concat(latest.author.avatar_url, "\" alt=\"Avatar\" width=\"16\" height=\"16\">")
-                            ]);
+                            this.setCachedResponse(latest);
+                            this.updateBoxes(latest);
                         }
                         else {
                             message = 'Failed to decode release data from GitHub';
                             console.warn(message);
-                            this.setError(infoLeft, message);
-                            this.setError(infoRight, message);
+                            if (!cached) {
+                                this.setError(this._infoLeft, message);
+                                this.setError(this._infoRight, message);
+                            }
                         }
                         return [3 /*break*/, 4];
                     case 3:
                         message = 'Failed to load release data from GitHub';
                         console.warn(message);
-                        this.setError(infoLeft, message);
-                        this.setError(infoRight, message);
+                        if (!cached) {
+                            this.setError(this._infoLeft, message);
+                            this.setError(this._infoRight, message);
+                        }
                         _a.label = 4;
                     case 4: return [2 /*return*/, true];
                 }
             });
         });
     };
+    Site.updateBoxes = function (release) {
+        this.setInfo(this._infoLeft, [
+            '<h2>Latest release</h2>',
+            "Link: <a href=\"".concat(release.html_url, "\">").concat(release.tag_name, "</a>"),
+            "Title: ".concat(release.name),
+            'Date: ' + new Date(release.published_at).toISOString().split('T')[0],
+            'Pre-release: ' + (release.prerelease ? 'Yes' : 'No'),
+            "Source: <a href=\"".concat(release.zipball_url, "\">.zip</a>, <a href=\"").concat(release.tarball_url, "\">.tar</a>")
+        ]);
+        this.setInfo(this._infoRight, [
+            '<h2>Maintainer</h2>',
+            "Profile: <a href=\"".concat(release.author.html_url, "\">").concat(release.author.login, "</a> <img src=\"").concat(release.author.avatar_url, "\" alt=\"Avatar\" width=\"16\" height=\"16\">")
+        ]);
+    };
     Site.setInfo = function (info, lines) {
         info.innerHTML = '<p>' + lines.join('<p/><p>') + '</p>';
     };
     Site.setError = function (element, message) {
         element.innerHTML = message !== null && message !== void 0 ? message : 'Failed to load release data from GitHub';
+    };
+    Site.setCachedResponse = function (release) {
+        localStorage.setItem('release', JSON.stringify(release));
+    };
+    Site.getCachedResponse = function () {
+        var text = localStorage.getItem('release');
+        if (!text)
+            return null;
+        return JSON.parse(text);
     };
     return Site;
 }());
