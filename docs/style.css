@@ -1,9 +1,9 @@
 :root {
-    --color-background: rgb(20 20 20);
-    --color-background-center: rgb(50 50 50);
+    --color-background: rgb(15 15 15);
+    --color-background-center: rgb(45 45 45);
     --color-orange: rgb(255 191 0);
     --color-purple: rgb(191 0 255);
-    --color-glow: rgb(255 255 255 / 33%);
+    --color-glow: rgb(255 255 255 / 25%);
     --color-shadow: rgb(0 0 0 / 66%);
 }
 body {
