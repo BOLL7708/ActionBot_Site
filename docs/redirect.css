@@ -1,0 +1,21 @@
+body {
+    color: white;
+    font-family: monospace;
+    background-color: rgb(15 15 15);
+    background-image: url("_media/desbot_logo.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    background-size: 200px;
+    content: "Redirecting...";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    height: 100vh;
+}
+body:before {
+    font-size: 200%;
+    content: "Redirecting...";
+    padding-top: 250px;
+}
