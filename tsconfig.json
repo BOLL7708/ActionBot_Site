@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "sourceMap": true,
-    "outDir": "docs/scripts"
+    "outDir": "docs/_scripts"
   },
     "include": [
         "src/**/*"
