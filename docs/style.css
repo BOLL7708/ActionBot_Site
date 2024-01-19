@@ -114,16 +114,19 @@ h2 {
 
 /* Boxes */
 .big {
-    margin: 10pt;
+    margin: 10pt 0;
+    width: 500pt;
+}
+.box, .subcontainer {
     width: 500pt;
 }
 .box {
     box-sizing: border-box;
     padding: 10pt;
-    width: 500pt;
     border-radius: 10pt;
     box-shadow: var(--color-glow) 0 0 10pt;
     transition: box-shadow .3s ease-in-out;
+    overflow: clip;
 }
 .box.left, .box.right {
     border-style: dashed !important;
@@ -139,6 +142,27 @@ h2 {
 }
 .box:nth-of-type(odd) {
     border: 2.5pt solid var(--color-orange);
+}
+.button.box {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-flow: wrap;
+}
+.button.box button {
+    border: 2.5pt solid var(--color-orange);
+    border-radius: 10pt;
+    padding: 5pt 10pt;
+    margin: 5pt;
+    font-size: 125%;
+    background-color: transparent;
+    color: white;
+    font-family: monospace;
+    font-weight: bold;
+}
+.button.box button:hover {
+    background-color: var(--color-orange);
+    color: var(--color-purple);
 }
 
 /* Background */
@@ -162,7 +186,7 @@ h2 {
 
 /* Responsive */
 @media (max-width: 520pt) {
-    .big.box {
+    .big.box, .subcontainer {
         width: 100%;
     }
     .header-container {

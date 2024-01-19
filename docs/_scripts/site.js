@@ -45,6 +45,7 @@ var Site = /** @class */ (function () {
                         console.log('Site is running!');
                         this._infoLeft = document.querySelector('.box.left');
                         this._infoRight = document.querySelector('.box.right');
+                        this.setupButtons();
                         return [4 /*yield*/, this.loadReleaseData()];
                     case 1:
                         _a.sent();
@@ -52,6 +53,24 @@ var Site = /** @class */ (function () {
                 }
             });
         });
+    };
+    Site.setupButtons = function () {
+        var containerInfo = document.querySelector('#info_container');
+        var containerNotes = document.querySelector('#notes_container');
+        var containerLinks = document.querySelector('#links_container');
+        containerNotes.style.display = 'none';
+        containerLinks.style.display = 'none';
+        var buttonInfo = document.querySelector('#info_button');
+        var buttonNotes = document.querySelector('#notes_button');
+        var buttonLinks = document.querySelector('#links_button');
+        buttonInfo.onclick = function (e) { toggle(0); };
+        buttonNotes.onclick = function (e) { toggle(1); };
+        buttonLinks.onclick = function (e) { toggle(2); };
+        function toggle(index) {
+            containerInfo.style.display = index == 0 ? 'block' : 'none';
+            containerNotes.style.display = index == 1 ? 'block' : 'none';
+            containerLinks.style.display = index == 2 ? 'block' : 'none';
+        }
     };
     Site.loadReleaseData = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -73,6 +92,7 @@ var Site = /** @class */ (function () {
                     case 2:
                         releases = _a.sent();
                         if (releases) {
+                            this.updateNotes(releases);
                             latest = releases.reduce(function (a, b) { return a.id > b.id ? a : b; });
                             this.setCachedResponse(latest);
                             this.updateBoxes(latest);
@@ -127,6 +147,13 @@ var Site = /** @class */ (function () {
         if (!text)
             return null;
         return JSON.parse(text);
+    };
+    Site.updateNotes = function (releases) {
+        var notes = document.querySelector('#notes_container');
+        notes.innerHTML = releases.map(function (release) {
+            var date = new Date(release.published_at).toISOString().split('T')[0];
+            return "<div class=\"big box\"><h2>[<a href=\"".concat(release.html_url, "\" target=\"_blank\">").concat(date, "</a>] ").concat(release.name, "</h2><p>").concat(marked.parse(release.body), "</p></div>");
+        }).join('');
     };
     return Site;
 }());

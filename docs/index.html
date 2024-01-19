@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="_scripts/site.js"></script>
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="16x16" href="_media/desbot_logo_16.png"/>
@@ -35,49 +36,76 @@
         </div>
         <div class="box right">Loading...</div>
     </div>
-    <div class="big box">
-        <h2>Questions & Answers</h2>
-        <p><strong>Q:</strong> What is it?<br/><strong>A:</strong> Desbot is a bot for <a href="https://www.twitch.tv/">Twitch</a> streamers that can handle chat interactions, rewards and more.</p>
-        <p><strong>Q:</strong> What is the current status?<br/><strong>A:</strong> It is currently released as an alpha version, this means major breaking changes will still occur, but I try to make those transitions as painless as possible.</p>
-        <p><strong>Q:</strong> Where can I get it?<br/><strong>A:</strong> Get the latest release over at <a href="https://github.com/boll7708/desbot">Github</a>.</p>
-        <p><strong>Q:</strong> Where can I talk about it?<br/><strong>A:</strong> There is a an official <a href="https://discord.gg/St6BHXG37N">Discord server</a> and <a href="https://reddit.com/r/desbot">subreddit</a> for that. Both of these places are very quiet still as the project is not mature enough to market it to users yet.</p>
-        <p><strong>Q:</strong> Where can I see what is worked on?<br/><strong>A:</strong> There is a public <a href="https://trello.com/w/desbot_app">Trello workspace</a>, it will be utilized more when this current gargantuan task is complete.</p>
+    <div class="big button box">
+        <button id="info_button">Information</button><button id="notes_button">Release Notes</button><button id="links_button">Links</button>
     </div>
-    <div class="big box">
-        <h2>History</h2>
-        <p>Desbot started out as a project called "Streaming Widget", as it was a single browser source in OBS that could play back audio and show media on screen.</p>
-        <p>Over time, the project scope expanded, and it is no longer suitable to be called a widget, so it has now been reborn as a bot. The project is still running as a single browser source but that is also planned to change.</p>
+    <div id="info_container" class="subcontainer">
+        <div class="big box">
+            <h2>Questions & Answers</h2>
+            <p><strong>Q:</strong> What is it?<br/><strong>A:</strong> Desbot is a bot for <a href="https://www.twitch.tv/" target="_blank">Twitch</a> streamers that can handle chat interactions, rewards and more.</p>
+            <p><strong>Q:</strong> What is the current status?<br/><strong>A:</strong> It is currently released as an alpha version, this means major breaking changes will still occur, but I try to make those transitions as painless as possible.</p>
+            <p><strong>Q:</strong> Where can I get it?<br/><strong>A:</strong> Get the latest release over at <a href="./github">Github</a>.</p>
+            <p><strong>Q:</strong> Where can I talk about it?<br/><strong>A:</strong> There is a an official <a href="./discord" >Discord server</a> and <a href="./reddit">subreddit</a> for that. Both of these places are very quiet still as the project is not mature enough to market it to users yet.</p>
+            <p><strong>Q:</strong> Where can I see what is worked on?<br/><strong>A:</strong> There is a public <a href="./trello">Trello workspace</a>, it will be utilized more when this current gargantuan task is complete.</p>
+        </div>
+        <div class="big box">
+            <h2>History</h2>
+            <p>Desbot started out as a project called "Streaming Widget", as it was a single browser source in OBS that could play back audio and show media on screen.</p>
+            <p>Over time, the project scope expanded, and it is no longer suitable to be called a widget, so it has now been reborn as a bot. The project is still running as a single browser source but that is also planned to change.</p>
+        </div>
+        <div class="big box">
+            <h2>Present Form</h2>
+            <p>The main features handled by this bot are as follows:</p>
+            <ul>
+                <li>Can read Twitch chat, uses this for commands, text to speech through <a href="https://cloud.google.com/text-to-speech">Google</a>, logging and overlays.</li>
+                <li>Can handle Twitch rewards, this means create and update rewards, listen to redemptions and trigger things to happen.</li>
+                <li>Can manage Twitch roles, title and category, like setting the game category based on currently running game.
+                <li>Can post things to <a href="https://discord.com/">Discord</a>, like chat log, redemptions and screenshots.</li>
+                <li>Can connect to <a href="https://obsproject.com/">OBS Studio</a>, mainly toggle sources and filters and take screenshots.</li>
+                <li>Can connect to <a href="https://steampowered.com/">Steam</a> to get currently played game, game meta data and achievements.</li>
+                <li>Can connect to VR accessories like <a href="https://github.com/BOLL7708/OpenVR2WS">OpenVR2WS</a>, <a href="https://github.com/BOLL7708/OpenVROverlayPipe">OpenVROverlayPipe</a> and <a href="https://github.com/BOLL7708/SuperScreenShotterVR">SuperScreenShotterVR</a>.</li>
+                <li>Can connect to a <a href="https://www.philips-hue.com/">Philips Hue</a> bridge to control bulbs and sockets.</li>
+                <li>Can send key combinations or mouse clicks to arbitrary applications on your system through <a href="https://www.autoitscript.com/">AutoIt</a>.</li>
+            </ul>
+        </div>
+        <div class="big box">
+            <h2>Current Work</h2>
+            <p>Since more than a year back work has been put in to convert the previously hard-coded configs to database-stored entries as well as a browser based editor for all settings.</p>
+            <p>This work is nearing completion, with almost full feature retention, but there will need to be some additional systems built out after the initial release, like the dashboard.</p>
+        </div>
+        <div class="big box">
+            <h2>Future Plans</h2>
+            <p>There will be a transition from running as a webpage requiring a local webserver with PHP and MySQL to running only in <a href="https://nodejs.org/">Node.JS</a>, this as a majority of the existing code is the backend that handles all I/O, so it does not need the browser client.</p>
+            <p>There will still be one or more components that are loaded as browser sources, but those will be loaded from the Node instance and will only be for presentation; to provide overlay elements, video and audio playback.</p>
+            <p>This will include moving away from PHP as the page templating system, before this happens the current code base will be worked into a stable working state though, as it is a quite disruptive update.</p>
+        </div>
+        <div class="big box">
+            <h2>Brand Explained</h2>
+            <p><strong>Name:</strong> Desbot is a mix of despot and robot, it is a satirical reference to an authoritarian ruler with absolute power and control, and a mindless machine with no conscience. And this thing is running and/or ruining your stream.</p>
+            <p><strong>Logo:</strong> The crown represents the despot part of desbot, and the head and face is the robot part of desbot.</p>
+        </div>
     </div>
-    <div class="big box">
-        <h2>Present Form</h2>
-        <p>The main features handled by this bot are as follows:</p>
-        <ul>
-            <li>Can read Twitch chat, uses this for commands, text to speech through <a href="https://cloud.google.com/text-to-speech">Google</a>, logging and overlays.</li>
-            <li>Can handle Twitch rewards, this means create and update rewards, listen to redemptions and trigger things to happen.</li>
-            <li>Can manage Twitch roles, title and category, like setting the game category based on currently running game.
-            <li>Can post things to <a href="https://discord.com/">Discord</a>, like chat log, redemptions and screenshots.</li>
-            <li>Can connect to <a href="https://obsproject.com/">OBS Studio</a>, mainly toggle sources and filters and take screenshots.</li>
-            <li>Can connect to <a href="https://steampowered.com/">Steam</a> to get currently played game, game meta data and achievements.</li>
-            <li>Can connect to VR accessories like <a href="https://github.com/BOLL7708/OpenVR2WS">OpenVR2WS</a>, <a href="https://github.com/BOLL7708/OpenVROverlayPipe">OpenVROverlayPipe</a> and <a href="https://github.com/BOLL7708/SuperScreenShotterVR">SuperScreenShotterVR</a>.</li>
-            <li>Can connect to a <a href="https://www.philips-hue.com/">Philips Hue</a> bridge to control bulbs and sockets.</li>
-            <li>Can send key combinations or mouse clicks to arbitrary applications on your system through <a href="https://www.autoitscript.com/">AutoIt</a>.</li>
-        </ul>
-    </div>
-    <div class="big box">
-        <h2>Current Work</h2>
-        <p>Since more than a year back work has been put in to convert the previously hard-coded configs to database-stored entries as well as a browser based editor for all settings.</p>
-        <p>This work is nearing completion, with almost full feature retention, but there will need to be some additional systems built out after the initial release, like the dashboard.</p>
-    </div>
-    <div class="big box">
-        <h2>Future Plans</h2>
-        <p>There will be a transition from running as a webpage requiring a local webserver with PHP and MySQL to running only in <a href="https://nodejs.org/">Node.JS</a>, this as a majority of the existing code is the backend that handles all I/O, so it does not need the browser client.</p>
-        <p>There will still be one or more components that are loaded as browser sources, but those will be loaded from the Node instance and will only be for presentation; to provide overlay elements, video and audio playback.</p>
-        <p>This will include moving away from PHP as the page templating system, before this happens the current code base will be worked into a stable working state though, as it is a quite disruptive update.</p>
-    </div>
-    <div class="big box">
-        <h2>Brand Explained</h2>
-        <p><strong>Name:</strong> Desbot is a mix of despot and robot, it is a satirical reference to an authoritarian ruler with absolute power and control, and a mindless machine with no conscience. And this thing is running and/or ruining your stream.</p>
-        <p><strong>Logo:</strong> The crown represents the despot part of desbot, and the head and face is the robot part of desbot.</p>
+    <div id="notes_container" class="subcontainer">Loading...</div>
+    <div id="links_container" class="subcontainer">
+        <div class="big box">
+            <h2>Links</h2>
+            <p><strong>Official</strong></p>
+            <ul>
+                <li><a href="./discord" target="_blank">Discord</a> - Where to talk about this bot and get help or inspiration.</li>
+                <li><a href="./github" target="_blank">GitHub</a> - Where to find the bot itself.</li>
+                <li><a href="./trello" target="_blank">Trello</a> - Where to find what is currently being worked on.</li>
+                <li><a href="./reddit" target="_blank">Reddit</a></li>
+                <li><a href="./bluesky" target="_blank">Bluesky</a></li>
+                <li><a href="./twitter" target="_blank">Twitter</a></li>
+<!--                <li><a href="./twitch" target="_blank">Twitch</a> - Any broadcast of coding the bot.</li>-->
+            </ul>
+            <p><strong>Prominent Users</strong></p>
+            <ul>
+                <li>User #1: <a href="https://twitch.tv/droculusvr" target="_blank">DrOculusVR</a> - Variety streamer of the VR kind.</li>
+                <li>User #0: <a href="https://twitch.tv/boll7708" target="_blank">BOLL7708</a> - Variety VR/flat/coding streamer and the maker of this bot.</li>
+            </ul>
+
+        </div>
     </div>
     <p></p>
 </div>

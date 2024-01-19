@@ -5,8 +5,28 @@ class Site {
         console.log('Site is running!')
         this._infoLeft = document.querySelector('.box.left') as HTMLDivElement
         this._infoRight = document.querySelector('.box.right') as HTMLDivElement
+        this.setupButtons()
         await this.loadReleaseData()
         return void 0
+    }
+    static setupButtons() {
+        const containerInfo = document.querySelector('#info_container') as HTMLDivElement
+        const containerNotes = document.querySelector('#notes_container') as HTMLDivElement
+        const containerLinks = document.querySelector('#links_container') as HTMLDivElement
+        containerNotes.style.display = 'none'
+        containerLinks.style.display = 'none'
+
+        const buttonInfo = document.querySelector('#info_button') as HTMLButtonElement
+        const buttonNotes = document.querySelector('#notes_button') as HTMLButtonElement
+        const buttonLinks = document.querySelector('#links_button') as HTMLButtonElement
+        buttonInfo.onclick = (e) => {toggle(0)}
+        buttonNotes.onclick = (e) => {toggle(1)}
+        buttonLinks.onclick = (e) => {toggle(2)}
+        function toggle(index: number) {
+            containerInfo.style.display = index == 0 ? 'block' : 'none'
+            containerNotes.style.display = index == 1 ? 'block' : 'none'
+            containerLinks.style.display = index == 2 ? 'block' : 'none'
+        }
     }
     static async loadReleaseData() {
         const cached = this.getCachedResponse()
@@ -19,6 +39,7 @@ class Site {
         if(response.ok) {
             const releases = await response.json() as IRelease[]
             if(releases) {
+                this.updateNotes(releases)
                 const latest = releases.reduce((a, b) => a.id > b.id ? a : b)
                 this.setCachedResponse(latest)
                 this.updateBoxes(latest)
@@ -67,6 +88,13 @@ class Site {
         const text = localStorage.getItem('release')
         if(!text) return null
         return JSON.parse(text) as IRelease
+    }
+    static updateNotes(releases: IRelease[]) {
+        const notes = document.querySelector('#notes_container') as HTMLDivElement
+        notes.innerHTML = releases.map(release => {
+            const date = new Date(release.published_at).toISOString().split('T')[0]
+            return `<div class="big box"><h2>[<a href="${release.html_url}" target="_blank">${date}</a>] ${release.name}</h2><p>${marked.parse(release.body)}</p></div>`
+        }).join('')
     }
 }
 
