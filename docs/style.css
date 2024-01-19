@@ -6,6 +6,9 @@
     --color-glow: rgb(255 255 255 / 25%);
     --color-shadow: rgb(0 0 0 / 66%);
 }
+html {
+    overflow-y: scroll;
+}
 body {
     color: white;
     font-family: monospace;
