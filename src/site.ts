@@ -1,39 +1,63 @@
 class Site {
     static _infoLeft: HTMLDivElement
     static _infoRight: HTMLDivElement
+    static readonly PAGE_INFO = 0
+    static readonly PAGE_LINKS = 1
+    static readonly PAGE_README = 2
+    static readonly PAGE_NOTES = 3
     static async run() {
         console.log('Site is running!')
         this._infoLeft = document.querySelector('.box.left') as HTMLDivElement
         this._infoRight = document.querySelector('.box.right') as HTMLDivElement
         this.setupButtons()
         await this.loadReleaseData()
+        await this.loadReadMeData()
         return void 0
     }
     static setupButtons() {
         const containerInfo = document.querySelector('#info_container') as HTMLDivElement
-        const containerNotes = document.querySelector('#notes_container') as HTMLDivElement
         const containerLinks = document.querySelector('#links_container') as HTMLDivElement
+        const containerReadMe = document.querySelector('#readme_container') as HTMLDivElement
+        const containerNotes = document.querySelector('#notes_container') as HTMLDivElement
         containerNotes.style.display = 'none'
         containerLinks.style.display = 'none'
 
         const buttonInfo = document.querySelector('#info_button') as HTMLButtonElement
-        const buttonNotes = document.querySelector('#notes_button') as HTMLButtonElement
         const buttonLinks = document.querySelector('#links_button') as HTMLButtonElement
-        buttonInfo.onclick = (e) => {toggle(0)}
-        buttonNotes.onclick = (e) => {toggle(1)}
-        buttonLinks.onclick = (e) => {toggle(2)}
+        const buttonReadMe = document.querySelector('#readme_button') as HTMLButtonElement
+        const buttonNotes = document.querySelector('#notes_button') as HTMLButtonElement
+        buttonInfo.onclick = (e) => {toggle(this.PAGE_INFO)}
+        buttonLinks.onclick = (e) => {toggle(this.PAGE_LINKS)}
+        buttonReadMe.onclick = (e) => {toggle(this.PAGE_README)}
+        buttonNotes.onclick = (e) => {toggle(this.PAGE_NOTES)}
         function toggle(index: number) {
-            toggleActive(buttonInfo, index == 0)
-            toggleActive(buttonNotes, index == 1)
-            toggleActive(buttonLinks, index == 2)
-            containerInfo.style.display = index == 0 ? 'block' : 'none'
-            containerNotes.style.display = index == 1 ? 'block' : 'none'
-            containerLinks.style.display = index == 2 ? 'block' : 'none'
+            toggleActive(buttonInfo, index == Site.PAGE_INFO)
+            toggleActive(buttonLinks, index == Site.PAGE_LINKS)
+            toggleActive(buttonReadMe, index == Site.PAGE_README)
+            toggleActive(buttonNotes, index == Site.PAGE_NOTES)
+            containerInfo.style.display = index == Site.PAGE_INFO ? 'block' : 'none'
+            containerLinks.style.display = index == Site.PAGE_LINKS ? 'block' : 'none'
+            containerReadMe.style.display = index == Site.PAGE_README ? 'block' : 'none'
+            containerNotes.style.display = index == Site.PAGE_NOTES ? 'block' : 'none'
         }
         function toggleActive(button: HTMLButtonElement, on: boolean) {
             if(on) button.classList.add('active')
             else button.classList.remove('active')
         }
+    }
+    static async loadReadMeData() {
+        const url = 'https://raw.githubusercontent.com/boll7708/desbot/master/README.md'
+        const response = await fetch(url)
+        const readme = document.querySelector('#readme_container') as HTMLDivElement
+        if(response.ok) {
+            const text = await response.text()
+            const blocks = text.split(/^\s*---+\s*$/gm)
+            console.log(readme, blocks)
+            readme.innerHTML = blocks.map(block => { return `<div class="big box">${marked.parse(block)}</div>`}).join('')
+        } else {
+            readme.innerHTML = `<div class="big box"><p>Failed to load README.md from GitHub.</p>`
+        }
+        return true
     }
     static async loadReleaseData() {
         const cached = this.getCachedResponse()
@@ -79,7 +103,7 @@ class Site {
         ])
         this.setInfo(this._infoRight, [
             '<h2>Maintainer</h2>',
-            `Profile: <a href="${release.author.html_url}">${release.author.login}</a> <img src="${release.author.avatar_url}" alt="Avatar" width="16" height="16">`
+            `Profile: <a href="${release.author.html_url}">${release.author.login}</a>`
         ])
     }
     static setInfo(info: HTMLDivElement, lines: string[]) {
@@ -100,7 +124,7 @@ class Site {
         const notes = document.querySelector('#notes_container') as HTMLDivElement
         notes.innerHTML = releases.map(release => {
             const date = new Date(release.published_at).toISOString().split('T')[0]
-            return `<div class="big box"><h2>[<a href="${release.html_url}" target="_blank">${date}</a>] ${release.name}</h2><p>${marked.parse(release.body)}</p></div>`
+            return `<div class="big box"><h2>[<a href="${release.html_url}" target="_blank">${date}</a>] ${release.name}</h2>${marked.parse(release.body)}</div>`
         }).join('')
     }
 }

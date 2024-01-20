@@ -37,7 +37,12 @@
         <div class="box right">Loading...</div>
     </div>
     <div class="big button box">
-        <button id="info_button" class="active">Information</button><button id="notes_button">Release Notes</button><button id="links_button">Links</button>
+        <h2>
+            <button id="info_button" class="active" title="General information about the project.">Info</button>
+            <button id="links_button" title="Links associated to the project.">Links</button>
+            <button id="readme_button" title="The ReadMe file loaded from GitHub.">ReadMe</button>
+            <button id="notes_button" title="The last 30 release notes loaded from GitHub.">Notes</button>
+        </h2>
     </div>
     <div id="info_container" class="subcontainer">
         <div class="big box">
@@ -85,6 +90,7 @@
             <p><strong>Logo:</strong> The crown represents the despot part of desbot, and the head and face is the robot part of desbot.</p>
         </div>
     </div>
+    <div id="readme_container" class="subcontainer">Loading...</div>
     <div id="notes_container" class="subcontainer">Loading...</div>
     <div id="links_container" class="subcontainer">
         <div class="big box">

@@ -109,9 +109,9 @@ a:hover {
 }
 
 /* Titles */
-h2 {
+h1, h2 {
     /*font-size: 150%;*/
-    margin: 0;
+    margin: 5pt 0;
     padding: 0;
 }
 
@@ -125,7 +125,7 @@ h2 {
 }
 .box {
     box-sizing: border-box;
-    padding: 10pt;
+    padding: 5pt 10pt;
     border-radius: 10pt;
     box-shadow: var(--color-glow) 0 0 10pt;
     transition: box-shadow .3s ease-in-out;
@@ -157,7 +157,7 @@ h2 {
     border-radius: 10pt;
     padding: 5pt 10pt;
     margin: 0 5pt;
-    font-size: 125%;
+    font-size: 100%;
     background-color: transparent;
     color: white;
     font-family: monospace;

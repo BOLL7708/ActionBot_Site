@@ -49,30 +49,39 @@ var Site = /** @class */ (function () {
                         return [4 /*yield*/, this.loadReleaseData()];
                     case 1:
                         _a.sent();
+                        return [4 /*yield*/, this.loadReadMeData()];
+                    case 2:
+                        _a.sent();
                         return [2 /*return*/, void 0];
                 }
             });
         });
     };
     Site.setupButtons = function () {
+        var _this = this;
         var containerInfo = document.querySelector('#info_container');
-        var containerNotes = document.querySelector('#notes_container');
         var containerLinks = document.querySelector('#links_container');
+        var containerReadMe = document.querySelector('#readme_container');
+        var containerNotes = document.querySelector('#notes_container');
         containerNotes.style.display = 'none';
         containerLinks.style.display = 'none';
         var buttonInfo = document.querySelector('#info_button');
-        var buttonNotes = document.querySelector('#notes_button');
         var buttonLinks = document.querySelector('#links_button');
-        buttonInfo.onclick = function (e) { toggle(0); };
-        buttonNotes.onclick = function (e) { toggle(1); };
-        buttonLinks.onclick = function (e) { toggle(2); };
+        var buttonReadMe = document.querySelector('#readme_button');
+        var buttonNotes = document.querySelector('#notes_button');
+        buttonInfo.onclick = function (e) { toggle(_this.PAGE_INFO); };
+        buttonLinks.onclick = function (e) { toggle(_this.PAGE_LINKS); };
+        buttonReadMe.onclick = function (e) { toggle(_this.PAGE_README); };
+        buttonNotes.onclick = function (e) { toggle(_this.PAGE_NOTES); };
         function toggle(index) {
-            toggleActive(buttonInfo, index == 0);
-            toggleActive(buttonNotes, index == 1);
-            toggleActive(buttonLinks, index == 2);
-            containerInfo.style.display = index == 0 ? 'block' : 'none';
-            containerNotes.style.display = index == 1 ? 'block' : 'none';
-            containerLinks.style.display = index == 2 ? 'block' : 'none';
+            toggleActive(buttonInfo, index == Site.PAGE_INFO);
+            toggleActive(buttonLinks, index == Site.PAGE_LINKS);
+            toggleActive(buttonReadMe, index == Site.PAGE_README);
+            toggleActive(buttonNotes, index == Site.PAGE_NOTES);
+            containerInfo.style.display = index == Site.PAGE_INFO ? 'block' : 'none';
+            containerLinks.style.display = index == Site.PAGE_LINKS ? 'block' : 'none';
+            containerReadMe.style.display = index == Site.PAGE_README ? 'block' : 'none';
+            containerNotes.style.display = index == Site.PAGE_NOTES ? 'block' : 'none';
         }
         function toggleActive(button, on) {
             if (on)
@@ -80,6 +89,33 @@ var Site = /** @class */ (function () {
             else
                 button.classList.remove('active');
         }
+    };
+    Site.loadReadMeData = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var url, response, readme, text, blocks;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        url = 'https://raw.githubusercontent.com/boll7708/desbot/master/README.md';
+                        return [4 /*yield*/, fetch(url)];
+                    case 1:
+                        response = _a.sent();
+                        readme = document.querySelector('#readme_container');
+                        if (!response.ok) return [3 /*break*/, 3];
+                        return [4 /*yield*/, response.text()];
+                    case 2:
+                        text = _a.sent();
+                        blocks = text.split(/^\s*---+\s*$/gm);
+                        console.log(readme, blocks);
+                        readme.innerHTML = blocks.map(function (block) { return "<div class=\"big box\">".concat(marked.parse(block), "</div>"); }).join('');
+                        return [3 /*break*/, 4];
+                    case 3:
+                        readme.innerHTML = "<div class=\"big box\"><p>Failed to load README.md from GitHub.</p>";
+                        _a.label = 4;
+                    case 4: return [2 /*return*/, true];
+                }
+            });
+        });
     };
     Site.loadReleaseData = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -139,7 +175,7 @@ var Site = /** @class */ (function () {
         ]);
         this.setInfo(this._infoRight, [
             '<h2>Maintainer</h2>',
-            "Profile: <a href=\"".concat(release.author.html_url, "\">").concat(release.author.login, "</a> <img src=\"").concat(release.author.avatar_url, "\" alt=\"Avatar\" width=\"16\" height=\"16\">")
+            "Profile: <a href=\"".concat(release.author.html_url, "\">").concat(release.author.login, "</a>")
         ]);
     };
     Site.setInfo = function (info, lines) {
@@ -161,9 +197,13 @@ var Site = /** @class */ (function () {
         var notes = document.querySelector('#notes_container');
         notes.innerHTML = releases.map(function (release) {
             var date = new Date(release.published_at).toISOString().split('T')[0];
-            return "<div class=\"big box\"><h2>[<a href=\"".concat(release.html_url, "\" target=\"_blank\">").concat(date, "</a>] ").concat(release.name, "</h2><p>").concat(marked.parse(release.body), "</p></div>");
+            return "<div class=\"big box\"><h2>[<a href=\"".concat(release.html_url, "\" target=\"_blank\">").concat(date, "</a>] ").concat(release.name, "</h2>").concat(marked.parse(release.body), "</div>");
         }).join('');
     };
+    Site.PAGE_INFO = 0;
+    Site.PAGE_LINKS = 1;
+    Site.PAGE_README = 2;
+    Site.PAGE_NOTES = 3;
     return Site;
 }());
 //# sourceMappingURL=site.js.map
