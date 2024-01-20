@@ -23,9 +23,16 @@ class Site {
         buttonNotes.onclick = (e) => {toggle(1)}
         buttonLinks.onclick = (e) => {toggle(2)}
         function toggle(index: number) {
+            toggleActive(buttonInfo, index == 0)
+            toggleActive(buttonNotes, index == 1)
+            toggleActive(buttonLinks, index == 2)
             containerInfo.style.display = index == 0 ? 'block' : 'none'
             containerNotes.style.display = index == 1 ? 'block' : 'none'
             containerLinks.style.display = index == 2 ? 'block' : 'none'
+        }
+        function toggleActive(button: HTMLButtonElement, on: boolean) {
+            if(on) button.classList.add('active')
+            else button.classList.remove('active')
         }
     }
     static async loadReleaseData() {

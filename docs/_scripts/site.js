@@ -67,9 +67,18 @@ var Site = /** @class */ (function () {
         buttonNotes.onclick = function (e) { toggle(1); };
         buttonLinks.onclick = function (e) { toggle(2); };
         function toggle(index) {
+            toggleActive(buttonInfo, index == 0);
+            toggleActive(buttonNotes, index == 1);
+            toggleActive(buttonLinks, index == 2);
             containerInfo.style.display = index == 0 ? 'block' : 'none';
             containerNotes.style.display = index == 1 ? 'block' : 'none';
             containerLinks.style.display = index == 2 ? 'block' : 'none';
+        }
+        function toggleActive(button, on) {
+            if (on)
+                button.classList.add('active');
+            else
+                button.classList.remove('active');
         }
     };
     Site.loadReleaseData = function () {
