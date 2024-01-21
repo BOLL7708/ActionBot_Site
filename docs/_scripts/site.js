@@ -197,7 +197,7 @@ var Site = /** @class */ (function () {
         var notes = document.querySelector('#notes_container');
         notes.innerHTML = releases.map(function (release) {
             var date = new Date(release.published_at).toISOString().split('T')[0];
-            return "<div class=\"big box\"><h2>[<a href=\"".concat(release.html_url, "\" target=\"_blank\">").concat(date, "</a>] ").concat(release.name, "</h2>").concat(marked.parse(release.body), "</div>");
+            return "<div class=\"big box\"><h2><a href=\"".concat(release.html_url, "\" target=\"_blank\">").concat(date, "</a> &gt; ").concat(release.name, "</h2>").concat(marked.parse(release.body), "</div>");
         }).join('');
     };
     Site.PAGE_INFO = 0;
