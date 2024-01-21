@@ -146,11 +146,11 @@ h1, h2 {
 .box:nth-of-type(odd) {
     border: 2.5pt solid var(--color-orange);
 }
-.button.box {
+.button.box, .button.box > div {
     display: flex;
     align-content: center;
     justify-content: center;
-    flex-flow: wrap;
+    flex-flow: row wrap;
 }
 .button.box button {
     border: 2.5pt solid var(--color-orange);
