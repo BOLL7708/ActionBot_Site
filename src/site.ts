@@ -51,9 +51,9 @@ class Site {
         const readme = document.querySelector('#readme_container') as HTMLDivElement
         if(response.ok) {
             const text = await response.text()
-            const blocks = text.split(/^\s*---+\s*$/gm)
-            console.log(readme, blocks)
-            readme.innerHTML = blocks.map(block => { return `<div class="big box">${marked.parse(block)}</div>`}).join('')
+            const html = marked.parse(text)
+            const blocks = html.split(/^\s*<hr>\s*$/gm)
+            readme.innerHTML = blocks.map(block => { return `<div class="big box">${block}</div>`}).join('')
         } else {
             readme.innerHTML = `<div class="big box"><p>Failed to load README.md from GitHub.</p>`
         }

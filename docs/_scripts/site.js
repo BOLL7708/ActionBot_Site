@@ -92,7 +92,7 @@ var Site = /** @class */ (function () {
     };
     Site.loadReadMeData = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var url, response, readme, text, blocks;
+            var url, response, readme, text, html, blocks;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -105,9 +105,9 @@ var Site = /** @class */ (function () {
                         return [4 /*yield*/, response.text()];
                     case 2:
                         text = _a.sent();
-                        blocks = text.split(/^\s*---+\s*$/gm);
-                        console.log(readme, blocks);
-                        readme.innerHTML = blocks.map(function (block) { return "<div class=\"big box\">".concat(marked.parse(block), "</div>"); }).join('');
+                        html = marked.parse(text);
+                        blocks = html.split(/^\s*<hr>\s*$/gm);
+                        readme.innerHTML = blocks.map(function (block) { return "<div class=\"big box\">".concat(block, "</div>"); }).join('');
                         return [3 /*break*/, 4];
                     case 3:
                         readme.innerHTML = "<div class=\"big box\"><p>Failed to load README.md from GitHub.</p>";
