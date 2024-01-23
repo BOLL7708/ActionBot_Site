@@ -53,7 +53,7 @@ class Site {
             const text = await response.text()
             const html = marked.parse(text)
             const blocks = html.split(/^\s*<hr>\s*$/gm)
-            readme.innerHTML = blocks.map(block => { return `<div class="big box">${block}</div>`}).join('')
+            readme.innerHTML = blocks.map(block => { return `<div class="big box">${block}</div>` }).join('')
         } else {
             readme.innerHTML = `<div class="big box"><p>Failed to load README.md from GitHub.</p>`
         }

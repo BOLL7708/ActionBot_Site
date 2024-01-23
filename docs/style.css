@@ -5,13 +5,14 @@
     --color-purple: rgb(191 0 255);
     --color-glow: rgb(255 255 255 / 25%);
     --color-shadow: rgb(0 0 0 / 66%);
+    --color-text: rgb(255 255 255 / 85%);
 }
 html {
     overflow-y: scroll;
 }
 body {
-    color: white;
-    font-family: monospace;
+    color: var(--color-text);
+    font-family: sans-serif;
     text-shadow: var(--color-glow) 0 0 1em, var(--color-shadow) 0 0 0.1em;
     background:
         var(--color-background)
@@ -42,6 +43,7 @@ a:hover {
     align-items: center;
 }
 .logo-container {
+    font-family: monospace;
     padding: 0 10pt;
     transition: transform 500ms ease-in-out;
 }
@@ -114,7 +116,12 @@ h1, h2 {
     margin: 5pt 0;
     padding: 0;
 }
-
+code {
+    background-color: var(--color-glow);
+    color: var(--color-text);
+    padding: 0 5pt;
+    border-radius: 5pt;
+}
 /* Boxes */
 .big {
     margin: 10pt 0;
@@ -159,7 +166,7 @@ h1, h2 {
     margin: 0 5pt;
     font-size: 100%;
     background-color: transparent;
-    color: white;
+    color: var(--color-text);
     font-family: monospace;
     font-weight: bold;
 }
