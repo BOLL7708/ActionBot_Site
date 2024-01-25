@@ -44,7 +44,7 @@ var Site = /** @class */ (function () {
                     case 0:
                         console.log('Site is running!');
                         this._infoLeft = document.querySelector('.box.left');
-                        this._infoRight = document.querySelector('.box.right');
+                        this.initNavigation();
                         this.setupButtons();
                         return [4 /*yield*/, this.loadReleaseData()];
                     case 1:
@@ -59,36 +59,54 @@ var Site = /** @class */ (function () {
     };
     Site.setupButtons = function () {
         var _this = this;
-        var containerInfo = document.querySelector('#info_container');
-        var containerLinks = document.querySelector('#links_container');
-        var containerReadMe = document.querySelector('#readme_container');
-        var containerNotes = document.querySelector('#notes_container');
-        containerNotes.style.display = 'none';
-        containerLinks.style.display = 'none';
-        var buttonInfo = document.querySelector('#info_button');
-        var buttonLinks = document.querySelector('#links_button');
-        var buttonReadMe = document.querySelector('#readme_button');
-        var buttonNotes = document.querySelector('#notes_button');
-        buttonInfo.onclick = function (e) { toggle(_this.PAGE_INFO); };
-        buttonLinks.onclick = function (e) { toggle(_this.PAGE_LINKS); };
-        buttonReadMe.onclick = function (e) { toggle(_this.PAGE_README); };
-        buttonNotes.onclick = function (e) { toggle(_this.PAGE_NOTES); };
-        function toggle(index) {
-            toggleActive(buttonInfo, index == Site.PAGE_INFO);
-            toggleActive(buttonLinks, index == Site.PAGE_LINKS);
-            toggleActive(buttonReadMe, index == Site.PAGE_README);
-            toggleActive(buttonNotes, index == Site.PAGE_NOTES);
-            containerInfo.style.display = index == Site.PAGE_INFO ? 'block' : 'none';
-            containerLinks.style.display = index == Site.PAGE_LINKS ? 'block' : 'none';
-            containerReadMe.style.display = index == Site.PAGE_README ? 'block' : 'none';
-            containerNotes.style.display = index == Site.PAGE_NOTES ? 'block' : 'none';
+        this._containerInfo = document.querySelector('#info_container');
+        this._containerLinks = document.querySelector('#links_container');
+        this._containerReadMe = document.querySelector('#readme_container');
+        this._containerNotes = document.querySelector('#notes_container');
+        this._buttonInfo = document.querySelector('#info_button');
+        this._buttonLinks = document.querySelector('#links_button');
+        this._buttonReadMe = document.querySelector('#readme_button');
+        this._buttonNotes = document.querySelector('#notes_button');
+        this._buttonInfo.onclick = function (e) { _this.toggle(_this.PAGE_INFO); };
+        this._buttonLinks.onclick = function (e) { _this.toggle(_this.PAGE_LINKS); };
+        this._buttonReadMe.onclick = function (e) { _this.toggle(_this.PAGE_README); };
+        this._buttonNotes.onclick = function (e) { _this.toggle(_this.PAGE_NOTES); };
+        this.toggle(window.location.hash.substring(1));
+    };
+    Site.toggle = function (index, skipHistory) {
+        var pages = [Site.PAGE_INFO, Site.PAGE_LINKS, Site.PAGE_README, Site.PAGE_NOTES];
+        if (pages.indexOf(index) == -1)
+            index = Site.PAGE_INFO;
+        if (this._currentIndex == index)
+            return;
+        this._currentIndex = index;
+        if (!skipHistory) {
+            console.log("Navigating to: ".concat(index));
+            history.pushState({ page: index }, index, '#' + index);
         }
-        function toggleActive(button, on) {
-            if (on)
-                button.classList.add('active');
-            else
-                button.classList.remove('active');
-        }
+        this.toggleActive(this._buttonInfo, index == Site.PAGE_INFO);
+        this.toggleActive(this._buttonLinks, index == Site.PAGE_LINKS);
+        this.toggleActive(this._buttonReadMe, index == Site.PAGE_README);
+        this.toggleActive(this._buttonNotes, index == Site.PAGE_NOTES);
+        this._containerInfo.style.display = index == Site.PAGE_INFO ? 'block' : 'none';
+        this._containerLinks.style.display = index == Site.PAGE_LINKS ? 'block' : 'none';
+        this._containerReadMe.style.display = index == Site.PAGE_README ? 'block' : 'none';
+        this._containerNotes.style.display = index == Site.PAGE_NOTES ? 'block' : 'none';
+    };
+    Site.toggleActive = function (button, on) {
+        if (on)
+            button.classList.add('active');
+        else
+            button.classList.remove('active');
+    };
+    Site.initNavigation = function () {
+        var _this = this;
+        window.onpopstate = function (e) {
+            if (e.state && e.state.page) {
+                console.log('Returning to: ' + e.state.page);
+                _this.toggle(e.state.page, true);
+            }
+        };
     };
     Site.loadReadMeData = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -147,7 +165,6 @@ var Site = /** @class */ (function () {
                             console.warn(message);
                             if (!cached) {
                                 this.setError(this._infoLeft, message);
-                                this.setError(this._infoRight, message);
                             }
                         }
                         return [3 /*break*/, 4];
@@ -156,7 +173,6 @@ var Site = /** @class */ (function () {
                         console.warn(message);
                         if (!cached) {
                             this.setError(this._infoLeft, message);
-                            this.setError(this._infoRight, message);
                         }
                         _a.label = 4;
                     case 4: return [2 /*return*/, true];
@@ -167,15 +183,13 @@ var Site = /** @class */ (function () {
     Site.updateBoxes = function (release) {
         this.setInfo(this._infoLeft, [
             '<h2>Latest release</h2>',
-            "Link: <a href=\"".concat(release.html_url, "\">").concat(release.tag_name, "</a>"),
-            "Title: ".concat(release.name),
-            'Date: ' + new Date(release.published_at).toISOString().split('T')[0],
-            'Pre-release: ' + (release.prerelease ? 'Yes' : 'No'),
-            "Source: <a href=\"".concat(release.zipball_url, "\">.zip</a>, <a href=\"").concat(release.tarball_url, "\">.tar</a>")
-        ]);
-        this.setInfo(this._infoRight, [
+            "<p>Link: <a href=\"".concat(release.html_url, "\">").concat(release.tag_name, "</a></p>"),
+            "<p>Title: ".concat(release.name, "</p>"),
+            '<p>Date: ' + new Date(release.published_at).toISOString().split('T')[0] + '</p>',
+            '<p>Pre-release: ' + (release.prerelease ? 'Yes' : 'No') + '</p>',
+            "<p>Source: <a href=\"".concat(release.zipball_url, "\">.zip</a>, <a href=\"").concat(release.tarball_url, "\">.tar</a></p>"),
             '<h2>Maintainer</h2>',
-            "Profile: <a href=\"".concat(release.author.html_url, "\">").concat(release.author.login, "</a>")
+            "<p>Profile: <a href=\"".concat(release.author.html_url, "\">").concat(release.author.login, "</a></p>"),
         ]);
     };
     Site.setInfo = function (info, lines) {
@@ -200,10 +214,10 @@ var Site = /** @class */ (function () {
             return "<div class=\"big box\"><h2><a href=\"".concat(release.html_url, "\" target=\"_blank\">").concat(date, "</a> &gt; ").concat(release.name, "</h2>").concat(marked.parse(release.body), "</div>");
         }).join('');
     };
-    Site.PAGE_INFO = 0;
-    Site.PAGE_LINKS = 1;
-    Site.PAGE_README = 2;
-    Site.PAGE_NOTES = 3;
+    Site.PAGE_INFO = 'info';
+    Site.PAGE_LINKS = 'links';
+    Site.PAGE_README = 'readme';
+    Site.PAGE_NOTES = 'notes';
     return Site;
 }());
 //# sourceMappingURL=site.js.map

@@ -1,48 +1,75 @@
 class Site {
     static _infoLeft: HTMLDivElement
-    static _infoRight: HTMLDivElement
-    static readonly PAGE_INFO = 0
-    static readonly PAGE_LINKS = 1
-    static readonly PAGE_README = 2
-    static readonly PAGE_NOTES = 3
+    static readonly PAGE_INFO = 'info'
+    static readonly PAGE_LINKS = 'links'
+    static readonly PAGE_README = 'readme'
+    static readonly PAGE_NOTES = 'notes'
+    static _containerInfo: HTMLDivElement
+    static _containerLinks: HTMLDivElement
+    static _containerReadMe: HTMLDivElement
+    static _containerNotes: HTMLDivElement
+    static _buttonInfo: HTMLButtonElement
+    static _buttonLinks: HTMLButtonElement
+    static _buttonReadMe: HTMLButtonElement
+    static _buttonNotes: HTMLButtonElement
+    static _currentIndex: string
+
     static async run() {
         console.log('Site is running!')
         this._infoLeft = document.querySelector('.box.left') as HTMLDivElement
-        this._infoRight = document.querySelector('.box.right') as HTMLDivElement
+        this.initNavigation()
         this.setupButtons()
         await this.loadReleaseData()
         await this.loadReadMeData()
         return void 0
     }
     static setupButtons() {
-        const containerInfo = document.querySelector('#info_container') as HTMLDivElement
-        const containerLinks = document.querySelector('#links_container') as HTMLDivElement
-        const containerReadMe = document.querySelector('#readme_container') as HTMLDivElement
-        const containerNotes = document.querySelector('#notes_container') as HTMLDivElement
-        containerNotes.style.display = 'none'
-        containerLinks.style.display = 'none'
+        this._containerInfo = document.querySelector('#info_container') as HTMLDivElement
+        this._containerLinks = document.querySelector('#links_container') as HTMLDivElement
+        this._containerReadMe = document.querySelector('#readme_container') as HTMLDivElement
+        this._containerNotes = document.querySelector('#notes_container') as HTMLDivElement
 
-        const buttonInfo = document.querySelector('#info_button') as HTMLButtonElement
-        const buttonLinks = document.querySelector('#links_button') as HTMLButtonElement
-        const buttonReadMe = document.querySelector('#readme_button') as HTMLButtonElement
-        const buttonNotes = document.querySelector('#notes_button') as HTMLButtonElement
-        buttonInfo.onclick = (e) => {toggle(this.PAGE_INFO)}
-        buttonLinks.onclick = (e) => {toggle(this.PAGE_LINKS)}
-        buttonReadMe.onclick = (e) => {toggle(this.PAGE_README)}
-        buttonNotes.onclick = (e) => {toggle(this.PAGE_NOTES)}
-        function toggle(index: number) {
-            toggleActive(buttonInfo, index == Site.PAGE_INFO)
-            toggleActive(buttonLinks, index == Site.PAGE_LINKS)
-            toggleActive(buttonReadMe, index == Site.PAGE_README)
-            toggleActive(buttonNotes, index == Site.PAGE_NOTES)
-            containerInfo.style.display = index == Site.PAGE_INFO ? 'block' : 'none'
-            containerLinks.style.display = index == Site.PAGE_LINKS ? 'block' : 'none'
-            containerReadMe.style.display = index == Site.PAGE_README ? 'block' : 'none'
-            containerNotes.style.display = index == Site.PAGE_NOTES ? 'block' : 'none'
+        this._buttonInfo = document.querySelector('#info_button') as HTMLButtonElement
+        this._buttonLinks = document.querySelector('#links_button') as HTMLButtonElement
+        this._buttonReadMe = document.querySelector('#readme_button') as HTMLButtonElement
+        this._buttonNotes = document.querySelector('#notes_button') as HTMLButtonElement
+        this._buttonInfo.onclick = (e) => {this.toggle(this.PAGE_INFO)}
+        this._buttonLinks.onclick = (e) => {this.toggle(this.PAGE_LINKS)}
+        this._buttonReadMe.onclick = (e) => {this.toggle(this.PAGE_README)}
+        this._buttonNotes.onclick = (e) => {this.toggle(this.PAGE_NOTES)}
+        
+        this.toggle(window.location.hash.substring(1))
+    }
+
+    private static toggle(index: string, skipHistory?: boolean) {
+        const pages = [Site.PAGE_INFO, Site.PAGE_LINKS, Site.PAGE_README, Site.PAGE_NOTES]
+        if(pages.indexOf(index) == -1) index = Site.PAGE_INFO
+        if(this._currentIndex == index) return
+        this._currentIndex = index
+        if(!skipHistory) {
+            console.log(`Navigating to: ${index}`)
+            history.pushState({page: index}, index, '#'+index)
         }
-        function toggleActive(button: HTMLButtonElement, on: boolean) {
-            if(on) button.classList.add('active')
-            else button.classList.remove('active')
+        this.toggleActive(this._buttonInfo, index == Site.PAGE_INFO)
+        this.toggleActive(this._buttonLinks, index == Site.PAGE_LINKS)
+        this.toggleActive(this._buttonReadMe, index == Site.PAGE_README)
+        this.toggleActive(this._buttonNotes, index == Site.PAGE_NOTES)
+        this._containerInfo.style.display = index == Site.PAGE_INFO ? 'block' : 'none'
+        this._containerLinks.style.display = index == Site.PAGE_LINKS ? 'block' : 'none'
+        this._containerReadMe.style.display = index == Site.PAGE_README ? 'block' : 'none'
+        this._containerNotes.style.display = index == Site.PAGE_NOTES ? 'block' : 'none'
+    }
+    private static toggleActive(button: HTMLButtonElement, on: boolean) {
+        if(on) button.classList.add('active')
+        else button.classList.remove('active')
+    }
+
+    static initNavigation() {
+        window.onpopstate = (e) => {
+            if(e.state && e.state.page) {
+                console.log('Returning to: '+e.state.page)
+                this.toggle(e.state.page, true)
+            }
         }
     }
     static async loadReadMeData() {
@@ -79,7 +106,6 @@ class Site {
                 console.warn(message)
                 if(!cached) {
                     this.setError(this._infoLeft, message)
-                    this.setError(this._infoRight, message)
                 }
             }
         } else {
@@ -87,7 +113,6 @@ class Site {
             console.warn(message)
             if(!cached) {
                 this.setError(this._infoLeft, message)
-                this.setError(this._infoRight, message)
             }
         }
         return true
@@ -95,15 +120,13 @@ class Site {
     static updateBoxes(release: IRelease) {
         this.setInfo(this._infoLeft, [
             '<h2>Latest release</h2>',
-            `Link: <a href="${release.html_url}">${release.tag_name}</a>`,
-            `Title: ${release.name}`,
-            'Date: '+new Date(release.published_at).toISOString().split('T')[0],
-            'Pre-release: '+(release.prerelease ? 'Yes' : 'No'),
-            `Source: <a href="${release.zipball_url}">.zip</a>, <a href="${release.tarball_url}">.tar</a>`
-        ])
-        this.setInfo(this._infoRight, [
+            `<p>Link: <a href="${release.html_url}">${release.tag_name}</a></p>`,
+            `<p>Title: ${release.name}</p>`,
+            '<p>Date: '+new Date(release.published_at).toISOString().split('T')[0]+'</p>',
+            '<p>Pre-release: '+(release.prerelease ? 'Yes' : 'No')+'</p>',
+            `<p>Source: <a href="${release.zipball_url}">.zip</a>, <a href="${release.tarball_url}">.tar</a></p>`,
             '<h2>Maintainer</h2>',
-            `Profile: <a href="${release.author.html_url}">${release.author.login}</a>`
+            `<p>Profile: <a href="${release.author.html_url}">${release.author.login}</a></p>`,
         ])
     }
     static setInfo(info: HTMLDivElement, lines: string[]) {
