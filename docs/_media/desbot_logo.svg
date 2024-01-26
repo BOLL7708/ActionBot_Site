@@ -3,7 +3,9 @@
     <!-- boundary -->
     <rect x="0" y="0" width="250" height="250" fill="transparent"/>
     <!-- graphic -->
-    <use href="#logo" x="25" y="20"/>
+    <use href="#logo" x="25" y="20" transform-origin="125 125">
+        <animateTransform id="lrot" attributeName="transform" attributeType="XML" type="rotate" values="0;-1;-2;4;0" dur="500ms" begin="60500ms;lrot.end+60500ms"/>
+    </use>
 
     <!-- STYLE -->
     <style>
@@ -15,18 +17,33 @@
     <defs>
         <!-- LOGO -->
         <g id="logo">
+            <use href="#face" x="0" y="40"/>
             <use href="#crown" x="0" y="0"/>
-            <use href="#face" x="0" y="60"/>
         </g>
 
         <!-- CROWN -->
-        <g id="crown">
+        <g id="crown" transform-origin="100 100">
+            <animateTransform id="crot" attributeName="transform" attributeType="XML" type="rotate" values="0;-1;-2;-4;0" dur="1s" begin="60s;crot.end+60s"/>
+            <animate id="cpos" attributeName="cy" values="0;10;20;40;0" dur="1000ms" begin="1s;cpos.end+1s"/>
             <!-- background -->
-            <path d="M0 30 A56.667 56.667,0,0 0,50 0 A56.667 56.667,0,0 0,150 0 A56.667 56.667,0,0 0,200 30 L200 40 L0 40 Z" class="bg"/>
+            <path d="
+            M 0 30
+            A 56.667 56.667,0,0 0,50 0
+            A 56.667 56.667,0,0 0,150 0
+            A 56.667 56.667,0,0 0,200 30
+            L 200 40
+            L 0 40
+            Z" class="bg"/>
             <use href="#tip" x="50" class="bg"/>
             <use href="#tip" x="150" class="bg"/>
             <!-- foreground -->
-            <path d="M0 0 A56.667 56.667,0,0 0,100 0 A56.667 56.667,0,0 0,200 0 L200 60 L0 60 Z" class="fg"/>
+            <path d="
+            M 0 0
+            A 56.667 56.667,0,0 0,100 0
+            A 56.667 56.667,0,0 0,200 0
+            L 200 60
+            L 0 60
+            Z" class="fg"/>
             <use href="#tip" x="0" class="fg"/>
             <use href="#tip" x="100" class="fg"/>
             <use href="#tip" x="200" class="fg"/>
@@ -40,10 +57,20 @@
         <!-- FACE -->
         <g id="face">
             <!-- background -->
-            <path d="M0 0 L200 0 L200 120 A40 40,0,0 1,160 160 L40 160 A40 40,0,0 1,0 120 Z" class="bg"/>
-            <use href="#eye" x="50" y="50"/>
-            <use href="#eye" x="150" y="50"/>
-            <use href="#mouth" x="20" y="100"/>
+            <path d="
+            M 0 20
+            A 20 20,0,0 1,20 0
+            L 180 0
+            A 20 20,0,0 1,200 20
+
+            L 200 140
+            A 40 40,0,0 1,160 180
+            L 40 180
+            A 40 40,0,0 1,0 140
+            Z" class="bg"/>
+            <use href="#eye" x="50" y="70"/>
+            <use href="#eye" x="150" y="70"/>
+            <use href="#mouth" x="20" y="120"/>
         </g>
         <g id="eye">
             <circle cx="0" cy="0" r="30" class="fg"/>
