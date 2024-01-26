@@ -60,7 +60,10 @@ class Site {
         this._containerNotes.style.display = index == Site.PAGE_NOTES ? 'block' : 'none'
     }
     private static toggleActive(button: HTMLButtonElement, on: boolean) {
-        if(on) button.classList.add('active')
+        if(on) {
+            button.classList.add('active')
+            button.focus({ preventScroll: true })
+        }
         else button.classList.remove('active')
     }
 

@@ -94,8 +94,10 @@ var Site = /** @class */ (function () {
         this._containerNotes.style.display = index == Site.PAGE_NOTES ? 'block' : 'none';
     };
     Site.toggleActive = function (button, on) {
-        if (on)
+        if (on) {
             button.classList.add('active');
+            button.focus({ preventScroll: true });
+        }
         else
             button.classList.remove('active');
     };
