@@ -62,7 +62,7 @@ class Site {
     private static toggleActive(button: HTMLButtonElement, on: boolean) {
         if(on) {
             button.classList.add('active')
-            button.focus({ preventScroll: true })
+            // button.focus({ preventScroll: true }) // TODO: This didn't work anyway, still not sure how to solve the faulty highlight after navigating back on mobile.
         }
         else button.classList.remove('active')
     }
