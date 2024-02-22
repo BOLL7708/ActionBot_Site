@@ -150,7 +150,7 @@ class Site {
         const notes = document.querySelector('#notes_container') as HTMLDivElement
         notes.innerHTML = releases.map(release => {
             const date = new Date(release.published_at).toISOString().split('T')[0]
-            return `<div class="big box"><h2><a href="${release.html_url}" target="_blank">${date}</a> &gt; ${release.name}</h2>${marked.parse(release.body)}</div>`
+            return `<div class="big box">${date} <a href="${release.html_url}" target="_blank">${release.tag_name}</a> <strong>${release.name}</strong><hr/>${marked.parse(release.body)}</div>`
         }).join('')
     }
 }
