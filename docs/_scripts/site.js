@@ -222,4 +222,5 @@ var Site = /** @class */ (function () {
     Site.PAGE_NOTES = 'notes';
     return Site;
 }());
+export default Site;
 //# sourceMappingURL=site.js.map

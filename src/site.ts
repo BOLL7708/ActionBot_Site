@@ -1,4 +1,4 @@
-class Site {
+export default class Site {
     static _infoLeft: HTMLDivElement
     static readonly PAGE_INFO = 'info'
     static readonly PAGE_LINKS = 'links'

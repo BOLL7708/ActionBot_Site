@@ -3,7 +3,6 @@
 <head>
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="_scripts/site.js"></script>
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="16x16" href="_media/desbot_logo_16.png"/>
     <link rel="icon" type="image/svg+xml" href="_media/desbot_logo.svg"/>
@@ -19,7 +18,7 @@
     <title>desbot</title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
-<body onload="Site.run()">
+<body>
 <div class="container">
     <div class="big header-container">
         <div class="box left">Loading...</div>
@@ -131,5 +130,9 @@
 <div class="logo-bg right">
     <img src="_media/desbot_logo.svg" class="logo-img" alt=""/>
 </div>
+<script type="module">
+    import Site from './_scripts/site.js'
+    Site.run()
+</script>
 </body>
 </html>
