@@ -1,9 +1,10 @@
 :root {
     --color-background: rgb(15 15 15);
     --color-background-center: rgb(45 45 45);
-    --color-orange: rgb(255 191 0);
-    --color-purple: rgb(191 0 255);
-    --color-glow: rgb(255 255 255 / 25%);
+    --color-orange: #dba507;
+    --color-purple: #6441a5;
+    --color-glow: rgb(255 255 255 / 33%);
+    --radius-glow: 7pt;
     --color-shadow: rgb(0 0 0 / 66%);
     --color-text: rgb(255 255 255 / 85%);
 }
@@ -47,9 +48,6 @@ a:hover {
     padding: 0 10pt;
     transition: transform 500ms ease-in-out;
 }
-.logo-container:hover {
-    transform: scale(0.95);
-}
 .header-container {
     display: flex;
     flex-direction: row;
@@ -62,7 +60,7 @@ a:hover {
 /* Logo */
 .logo-img {
     width: 150pt;
-    filter: drop-shadow(0 0 10pt var(--color-glow));
+    filter: drop-shadow(0 0 var(--radius-glow) var(--color-glow));
 }
 .logo {
     margin-top: -8pt;
@@ -120,8 +118,8 @@ h1, h2 {
 code {
     background-color: var(--color-glow);
     color: var(--color-text);
-    padding: 0 5pt;
-    border-radius: 5pt;
+    padding: 0 2pt;
+    border-radius: 2pt;
 }
 .jetbrains:hover {
     background-color: transparent !important;
@@ -145,7 +143,7 @@ code {
     box-sizing: border-box;
     padding: 5pt 10pt;
     border-radius: 10pt;
-    box-shadow: var(--color-glow) 0 0 10pt;
+    box-shadow: var(--color-glow) 0 0 var(--radius-glow);
     transition: box-shadow .3s ease-in-out;
     overflow: clip;
 }
@@ -153,7 +151,7 @@ code {
     border-style: dashed !important;
 }
 .box:hover {
-    box-shadow: var(--color-glow) 0 0 20pt;
+    box-shadow: var(--color-glow) 0 0 calc(var(--radius-glow)*2);
 }
 .box p {
     margin: 5pt 0;
