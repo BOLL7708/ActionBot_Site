@@ -1,9 +1,9 @@
 :root {
     --color-background: rgb(15 15 15);
     --color-background-center: rgb(45 45 45);
-    --color-orange: #dba507;
-    --color-purple: #6441a5;
-    --color-glow: rgb(255 255 255 / 33%);
+    --color-orange: #FFCB37;
+    --color-purple: #A970FF;
+    --color-glow: rgb(255 255 255 / 25%);
     --radius-glow: 7pt;
     --color-shadow: rgb(0 0 0 / 66%);
     --color-text: rgb(255 255 255 / 85%);
