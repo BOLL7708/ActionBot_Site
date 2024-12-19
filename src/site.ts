@@ -12,18 +12,19 @@ export default class Site {
     static _buttonLinks: HTMLButtonElement
     static _buttonReadMe: HTMLButtonElement
     static _buttonNotes: HTMLButtonElement
+    static _logo: HTMLImageElement
     static _currentIndex: string
 
     static async run() {
         console.log('Site is running!')
         this._infoLeft = document.querySelector('.box.left') as HTMLDivElement
         this.initNavigation()
-        this.setupButtons()
+        this.setupElements()
         await this.loadReleaseData()
         await this.loadReadMeData()
         return void 0
     }
-    static setupButtons() {
+    static setupElements() {
         this._containerInfo = document.querySelector('#info_container') as HTMLDivElement
         this._containerLinks = document.querySelector('#links_container') as HTMLDivElement
         this._containerReadMe = document.querySelector('#readme_container') as HTMLDivElement
@@ -37,7 +38,17 @@ export default class Site {
         this._buttonLinks.onclick = (e) => {this.toggle(this.PAGE_LINKS)}
         this._buttonReadMe.onclick = (e) => {this.toggle(this.PAGE_README)}
         this._buttonNotes.onclick = (e) => {this.toggle(this.PAGE_NOTES)}
-        
+
+        this._logo = document.querySelector('#logo') as HTMLImageElement
+        const logoDivine = ()=>{ this._logo.src = './_media/actionbot_divine.svg' }
+        const logoFilled = ()=>{ this._logo.src = './_media/actionbot_filled.svg' }
+        this._logo.addEventListener('mousedown', logoDivine)
+        this._logo.addEventListener('mouseup', logoFilled)
+        this._logo.addEventListener('touchstart', logoDivine)
+        this._logo.addEventListener('touchend', logoFilled)
+        this._logo.addEventListener('dragstart', (e)=>{ e.preventDefault() })
+        this._logo.addEventListener('dragend', (e)=>{ logoFilled() })
+
         this.toggle(window.location.hash.substring(1))
     }
 
@@ -76,7 +87,7 @@ export default class Site {
         }
     }
     static async loadReadMeData() {
-        const url = 'https://raw.githubusercontent.com/boll7708/desbot/master/README.md'
+        const url = 'https://raw.githubusercontent.com/boll7708/ActionBot/master/README.md'
         const response = await fetch(url)
         const readme = document.querySelector('#readme_container') as HTMLDivElement
         if(response.ok) {
@@ -95,7 +106,7 @@ export default class Site {
             console.log('Using cached release!')
             this.updateBoxes(cached)
         }
-        const url = 'https://api.github.com/repos/boll7708/desbot/releases'
+        const url = 'https://api.github.com/repos/boll7708/ActionBot/releases'
         const response = await fetch(url)
         if(response.ok) {
             const releases = await response.json() as IRelease[]

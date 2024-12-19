@@ -45,7 +45,7 @@ var Site = /** @class */ (function () {
                         console.log('Site is running!');
                         this._infoLeft = document.querySelector('.box.left');
                         this.initNavigation();
-                        this.setupButtons();
+                        this.setupElements();
                         return [4 /*yield*/, this.loadReleaseData()];
                     case 1:
                         _a.sent();
@@ -57,7 +57,7 @@ var Site = /** @class */ (function () {
             });
         });
     };
-    Site.setupButtons = function () {
+    Site.setupElements = function () {
         var _this = this;
         this._containerInfo = document.querySelector('#info_container');
         this._containerLinks = document.querySelector('#links_container');
@@ -71,6 +71,15 @@ var Site = /** @class */ (function () {
         this._buttonLinks.onclick = function (e) { _this.toggle(_this.PAGE_LINKS); };
         this._buttonReadMe.onclick = function (e) { _this.toggle(_this.PAGE_README); };
         this._buttonNotes.onclick = function (e) { _this.toggle(_this.PAGE_NOTES); };
+        this._logo = document.querySelector('#logo');
+        var logoDivine = function () { _this._logo.src = './_media/actionbot_divine.svg'; };
+        var logoFilled = function () { _this._logo.src = './_media/actionbot_filled.svg'; };
+        this._logo.addEventListener('mousedown', logoDivine);
+        this._logo.addEventListener('mouseup', logoFilled);
+        this._logo.addEventListener('touchstart', logoDivine);
+        this._logo.addEventListener('touchend', logoFilled);
+        this._logo.addEventListener('dragstart', function (e) { e.preventDefault(); });
+        this._logo.addEventListener('dragend', function (e) { logoFilled(); });
         this.toggle(window.location.hash.substring(1));
     };
     Site.toggle = function (index, skipHistory) {
@@ -116,7 +125,7 @@ var Site = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        url = 'https://raw.githubusercontent.com/boll7708/desbot/master/README.md';
+                        url = 'https://raw.githubusercontent.com/boll7708/ActionBot/master/README.md';
                         return [4 /*yield*/, fetch(url)];
                     case 1:
                         response = _a.sent();
@@ -148,7 +157,7 @@ var Site = /** @class */ (function () {
                             console.log('Using cached release!');
                             this.updateBoxes(cached);
                         }
-                        url = 'https://api.github.com/repos/boll7708/desbot/releases';
+                        url = 'https://api.github.com/repos/boll7708/ActionBot/releases';
                         return [4 /*yield*/, fetch(url)];
                     case 1:
                         response = _a.sent();

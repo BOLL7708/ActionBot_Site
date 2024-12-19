@@ -4,18 +4,17 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="_media/desbot_logo_16.png"/>
-    <link rel="icon" type="image/svg+xml" href="_media/desbot_logo.svg"/>
+    <link rel="icon" type="image/svg+xml" href="_media/actionbot_filled.svg"/>
     <!-- Embed -->
-    <meta property="og:title" content="Desbot - a bot for Twitch streaming">
-    <meta property="og:description" content="Desbot is a comprehensive streaming suite that connects to various other solutions and can manage your stream.">
-    <meta property="og:image" content="https://desbot.app/media/desbot_logo_1024.png">
-    <meta property="og:url" content="https://desbot.app">
+    <meta property="og:title" content="ActionBot - a bot for Twitch streaming">
+    <meta property="og:description" content="ActionBot is a comprehensive streaming suite that connects to various other solutions and can manage your stream.">
+<!-- TODO: <meta property="og:image" content="https://actionbot.app/_media/actionbot_banner.png">-->
+    <meta property="og:url" content="https://actionbot.app">
     <!-- Display -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <!-- Basic -->
-    <title>desbot</title>
+    <title>ActionBot</title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
@@ -24,13 +23,13 @@
         <div class="box left">Loading...</div>
         <div class="logo-container">
             <div>
-                <img src="_media/desbot_logo.svg" alt="desbot logo" class="logo-img"/>
+                <img src="_media/actionbot_filled.svg" alt="ActionBot Logo" class="logo-img" id="logo"/>
             </div>
             <div class="logo">
-                <span class="start"><span class="d">d</span><span class="e">e</span><span class="s">s</span></span><span class="end"><span class="b">b</span><span class="o">o</span><span class="t">t</span></span>
+                <span>ActionBot</span>
             </div>
             <div class="version">
-                <span>alpha</span>
+                <span>Alpha</span>
             </div>
         </div>
         <div class="box right center-text">
@@ -42,17 +41,17 @@
     <div class="big button box">
         <div>
             <h2><button id="info_button" class="active" title="General information about the project.">Info</button></h2>
-            <h2><button id="links_button" title="Links associated to the project.">Links</button></h2>
+            <h2><button id="readme_button" title="The ReadMe file loaded from GitHub.">ReadMe</button></h2>
         </div>
         <div>
-            <h2><button id="readme_button" title="The ReadMe file loaded from GitHub.">ReadMe</button></h2>
             <h2><button id="notes_button" title="The last 30 release notes loaded from GitHub.">Notes</button></h2>
+            <h2><button id="links_button" title="Links associated to the project.">Links</button></h2>
         </div>
     </div>
     <div id="info_container" class="subcontainer">
         <div class="big box">
             <h1>Questions & Answers</h1>
-            <p><strong>Q:</strong> What is it?<br/><strong>A:</strong> Desbot is a bot for <a href="https://www.twitch.tv/" target="_blank">Twitch</a> streamers that can handle chat interactions, rewards and more.</p>
+            <p><strong>Q:</strong> What is it?<br/><strong>A:</strong> ActionBot is a bot for <a href="https://www.twitch.tv/" target="_blank">Twitch</a> streamers that can handle chat interactions, rewards and more.</p>
             <p><strong>Q:</strong> What is the current status?<br/><strong>A:</strong> It is currently released as an alpha version, this means major breaking changes will still occur, but I try to make those transitions as painless as possible.</p>
             <p><strong>Q:</strong> Where can I get it?<br/><strong>A:</strong> Get the latest release over at <a href="./github">Github</a>.</p>
             <p><strong>Q:</strong> Where can I talk about it?<br/><strong>A:</strong> There is a an official <a href="./discord" >Discord server</a> and <a href="./reddit">subreddit</a> for that. Both of these places are very quiet still as the project is not mature enough to market it to users yet.</p>
@@ -60,8 +59,9 @@
         </div>
         <div class="big box">
             <h1>History</h1>
-            <p>Desbot started out as a project called "Streaming Widget", as it was a single browser source in OBS that could play back audio and show media on screen.</p>
-            <p>Over time, the project scope expanded, and it is no longer suitable to be called a widget, so it has now been reborn as a bot. The project is still running as a single browser source but that is also planned to change.</p>
+            <p>ActionBot started out as a project called "Streaming Widget", as it was a single browser source in OBS that could play back audio and show media on screen.</p>
+            <p>Over time, the project scope expanded, and it is no longer suitable to be called a widget, so it was then reborn as a bot named "desbot". The was still running as a single browser source.</p>
+            <p>Finally, the project was ported from running in the browser, to a standalone JavaScript runtime, with this there was a final rebranding, to "ActionBot", to signify this major change in project structure and functionality.</p>
         </div>
         <div class="big box">
             <h1>Present Form</h1>
@@ -91,8 +91,15 @@
         </div>
         <div class="big box">
             <h1>Brand Explained</h1>
-            <p><strong>Name:</strong> Desbot is a mix of despot and robot, it is a satirical reference to an authoritarian ruler with absolute power and control, and a mindless machine with no conscience. And this thing is running and/or ruining your stream.</p>
-            <p><strong>Logo:</strong> The crown represents the despot part of desbot, and the head and face is the robot part of desbot.</p>
+            <p><strong>Name:</strong> The name ActionBot comes from the main feature of this bot that is to execute configurable actions, these are the things the bot has to exert its will on reality.</p>
+            <p><strong>Logo:</strong> The main body represents three layers, from the top:
+                <ol>
+                    <li>The top layer represents what is shown to viewers, what is broadcast to the world, thus it is the most visible and has an antenna.</li>
+                    <li>The middle layer represents the bot logic, the part of the bot that binds everything together and handle all execution, thus it has hands to perform these tasks.</li>
+                    <li>The bottom layer represents the services the bot relies on, standing on the shoulders of giants, thus this layer has feet.</li>
+                </ol>
+                Other interesting aspects of the logo is that the main shape is a pentagon, with the limbs making out a star pattern, with the body being placed in the center. The layers are scaled in accordance to the golden ratio.
+            </p>
         </div>
     </div>
     <div id="readme_container" class="subcontainer">Loading...</div>
@@ -104,12 +111,9 @@
                 <li><a href="./discord" target="_blank">Discord</a> - Where to talk about this bot and get help or inspiration.</li>
                 <li><a href="./github" target="_blank">GitHub</a> - Where to find the bot itself.</li>
                 <li><a href="./trello" target="_blank">Trello</a> - Where to find what is currently being worked on.</li>
-                <li><a href="./youtube" target="_blank">Youtube</a> - Where to find tutorial videos.</li>
-                <li><a href="./reddit" target="_blank">Reddit</a></li>
-                <li><a href="./bluesky" target="_blank">Bluesky</a></li>
-                <li><a href="./twitter" target="_blank">Twitter</a></li>
             </ul>
         </div>
+        <!--
         <div class="big box">
             <h1>Prominent Users</h1>
             <ul>
@@ -120,6 +124,7 @@
                 <li>User #4: <a href="https://twitch.tv/buck3131" target="_blank">Buck3131</a> - Variety streamer featuring both VR and flat gameplay.</li>
             </ul>
         </div>
+        -->
     </div>
     <div class="medium center-text small-text">
         <p>Copyright © Andreas "BOLL" Aronsson 2021-2024</p>
@@ -127,10 +132,10 @@
     </div>
 </div>
 <div class="logo-bg left">
-    <img src="_media/desbot_logo.svg" class="logo-img" alt=""/>
+    <img src="_media/actionbot_filled.svg" class="logo-img" alt=""/>
 </div>
 <div class="logo-bg right">
-    <img src="_media/desbot_logo.svg" class="logo-img" alt=""/>
+    <img src="_media/actionbot_filled.svg" class="logo-img" alt=""/>
 </div>
 <script type="module">
     import Site from './_scripts/site.js'

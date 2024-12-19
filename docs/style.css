@@ -1,12 +1,10 @@
 :root {
-    --color-background: rgb(15 15 15);
-    --color-background-center: rgb(45 45 45);
-    --color-orange: #FFCA34;
-    --color-purple: #9146FF;
-    --color-glow: rgb(255 255 255 / 25%);
-    --radius-glow: 7pt;
-    --color-shadow: rgb(0 0 0 / 66%);
-    --color-text: rgb(255 255 255 / 85%);
+    --color-background: rgb(40 40 40);
+    --color-box-background: rgb(50 50 50);
+    --color-light: rgb(180 180 180);
+    --color-dark: rgb(100 100 100);
+    --color-darker: rgb(60 60 60);
+    --color-text: rgb(225 225 225);
 }
 html {
     overflow-y: scroll;
@@ -14,29 +12,18 @@ html {
 body {
     color: var(--color-text);
     font-family: sans-serif;
-    text-shadow: var(--color-glow) 0 0 1em, var(--color-shadow) 0 0 0.1em;
-    background:
-        var(--color-background)
-        linear-gradient(
-            90deg,
-            var(--color-background) 0%,
-            var(--color-background-center) 50%,
-            var(--color-background) 100%
-        )
-        repeat-y
-        center;
-    background-size: 750pt 100%;
+    background-color: var(--color-background);
 }
 a {
     border-radius: 4pt;
-    box-shadow: inset 0 0 0 0 var(--color-orange);
-    color: var(--color-orange);
+    box-shadow: inset 0 0 0 0 var(--color-light);
+    color: var(--color-light);
     margin: 0 -2pt;
     padding: 0 2pt;
 }
 a:hover {
-    color: var(--color-purple);
-    background-color: var(--color-orange);
+    background-color: var(--color-darker);
+    animation: rainbow 1s linear infinite;
 }
 .container, .logo-container {
     display: flex;
@@ -60,44 +47,28 @@ a:hover {
 /* Logo */
 .logo-img {
     width: 150pt;
-    filter: drop-shadow(0 0 var(--radius-glow) var(--color-glow));
+    filter: sepia(100%) saturate(5) hue-rotate(0deg);
+    animation: rainbow 5s linear infinite;
 }
+@keyframes rainbow {
+    0% { filter: sepia(100%) saturate(10) hue-rotate(0deg); }
+    100% { filter: sepia(100%) saturate(10) hue-rotate(360deg); }
+}
+
 .logo {
-    margin-top: -8pt;
+    animation: rainbow 5s linear infinite;
     font-weight: bold;
-    font-size: 500%;
+    font-size: 300%;
     white-space: nowrap;
 }
-@keyframes Bob {
-    0% { transform: translateY(-6pt); }
-    100% { transform: translateY(6pt); }
-}
-@keyframes BobLess {
-    0% { transform: translateY(-4pt); }
-    100% { transform: translateY(4pt); }
-}
-.logo .start *, .logo .end *, .logo-img, .version {
+.logo, .logo-img, .version {
     margin: 0;
     padding: 0;
     border: 0;
     display: inline-block;
 }
-.logo .start *, .logo .end * {
-    transform: translateY(-6pt);
-    animation: Bob 2s ease-in-out 0s infinite alternate;
-}
-.logo-img, .version {
-    transform: translateY(-4pt);
-    animation: BobLess 2s ease-in-out 0s infinite alternate;
-}
-.logo .d { animation-delay: 0ms; }
-.logo .e { animation-delay: 200ms; }
-.logo .s { animation-delay: 400ms; }
-.logo .b { animation-delay: 600ms; }
-.logo .o { animation-delay: 800ms; }
-.logo .t { animation-delay: 1000ms; }
-.logo .start { color: var(--color-purple); }
-.logo .end { color: var(--color-orange); }
+.logo .start { color: var(--color-dark); }
+.logo .end { color: var(--color-light); }
 
 .version {
     margin-top: -5pt;
@@ -106,7 +77,7 @@ a:hover {
 .version span {
     font-size: 200%;
     font-weight: bold;
-    color: var(--color-orange);
+    color: var(--color-light);
 }
 
 /* Titles */
@@ -116,10 +87,12 @@ h1, h2 {
     padding: 0;
 }
 code {
-    background-color: var(--color-glow);
     color: var(--color-text);
     padding: 0 2pt;
     border-radius: 2pt;
+}
+.jetbrains img {
+    filter: saturate(0);
 }
 .jetbrains:hover {
     background-color: transparent !important;
@@ -143,24 +116,13 @@ code {
     box-sizing: border-box;
     padding: 5pt 10pt;
     border-radius: 10pt;
-    box-shadow: var(--color-glow) 0 0 var(--radius-glow);
     transition: box-shadow .3s ease-in-out;
     overflow: clip;
-}
-.box.left, .box.right {
-    border-style: dashed !important;
-}
-.box:hover {
-    box-shadow: var(--color-glow) 0 0 calc(var(--radius-glow)*2);
+    border: 4pt double var(--color-dark);
+    background-color: var(--color-box-background);
 }
 .box p {
     margin: 5pt 0;
-}
-.box:nth-of-type(even) {
-    border: 2.5pt solid var(--color-purple);
-}
-.box:nth-of-type(odd) {
-    border: 2.5pt solid var(--color-orange);
 }
 .button.box, .button.box > div {
     display: flex;
@@ -169,7 +131,7 @@ code {
     flex-flow: row wrap;
 }
 .button.box button {
-    border: 2.5pt solid var(--color-orange);
+    border: 1pt solid var(--color-light);
     border-radius: 10pt;
     padding: 5pt 10pt;
     margin: 0 5pt;
@@ -180,12 +142,12 @@ code {
     font-weight: bold;
 }
 .button.box button:hover {
-    background-color: var(--color-orange);
-    color: var(--color-purple);
+    animation: rainbow 1s linear infinite;
+    background-color: var(--color-darker);
 }
 button.active {
-    background-color: var(--color-orange) !important;
-    color: var(--color-purple) !important;
+    background-color: var(--color-light) !important;
+    color: var(--color-dark) !important;
 }
 .center-text {
     text-align: center;
@@ -201,7 +163,6 @@ button.active {
     top: calc(50% - 260pt);
 }
 .logo-bg > img {
-    filter: blur(10pt) saturate(0.5);
     opacity: 0.25;
     width: 520pt;
     height: 520pt;
@@ -233,7 +194,6 @@ button.active {
         margin-bottom: 5pt;
     }
     .box.left, .box.right {
-        border-style: solid !important;
         width: calc(50% - 20pt);
     }
     .box.left {
