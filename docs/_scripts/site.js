@@ -71,15 +71,6 @@ var Site = /** @class */ (function () {
         this._buttonLinks.onclick = function (e) { _this.toggle(_this.PAGE_LINKS); };
         this._buttonReadMe.onclick = function (e) { _this.toggle(_this.PAGE_README); };
         this._buttonNotes.onclick = function (e) { _this.toggle(_this.PAGE_NOTES); };
-        this._logo = document.querySelector('#logo');
-        var logoDivine = function () { _this._logo.src = './_media/actionbot_divine.svg'; };
-        var logoFilled = function () { _this._logo.src = './_media/actionbot_filled.svg'; };
-        this._logo.addEventListener('mousedown', logoDivine);
-        this._logo.addEventListener('mouseup', logoFilled);
-        this._logo.addEventListener('touchstart', logoDivine);
-        this._logo.addEventListener('touchend', logoFilled);
-        this._logo.addEventListener('dragstart', function (e) { e.preventDefault(); });
-        this._logo.addEventListener('dragend', function (e) { logoFilled(); });
         this.toggle(window.location.hash.substring(1));
     };
     Site.toggle = function (index, skipHistory) {
