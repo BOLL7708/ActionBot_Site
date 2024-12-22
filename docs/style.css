@@ -31,7 +31,6 @@ a:hover {
     align-items: center;
 }
 .logo-container {
-    font-family: monospace;
     padding: 0 10pt;
     transition: transform 500ms ease-in-out;
 }
@@ -58,7 +57,7 @@ a:hover {
 .logo {
     animation: rainbow 5s linear infinite;
     font-weight: bold;
-    font-size: 300%;
+    font-size: 250%;
     white-space: nowrap;
 }
 .logo, .logo-img, .version {
@@ -75,7 +74,7 @@ a:hover {
     animation-delay: 1000ms;
 }
 .version span {
-    font-size: 200%;
+    font-size: 150%;
     font-weight: bold;
     color: var(--color-light);
 }
