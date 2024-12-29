@@ -6,14 +6,17 @@
     --color-darker: rgb(60 60 60);
     --color-text: rgb(225 225 225);
 }
+
 html {
     overflow-y: scroll;
 }
+
 body {
     color: var(--color-text);
     font-family: sans-serif;
     background-color: var(--color-background);
 }
+
 a {
     border-radius: 4pt;
     box-shadow: inset 0 0 0 0 var(--color-light);
@@ -21,96 +24,133 @@ a {
     margin: 0 -2pt;
     padding: 0 2pt;
 }
+
 a:hover {
     background-color: var(--color-darker);
     animation: rainbow 1s linear infinite;
 }
+
 .container, .logo-container {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+
 .logo-container {
     padding: 0 10pt;
     transition: transform 500ms ease-in-out;
+    animation: rainbow 5s linear infinite;
 }
+
 .header-container {
     display: flex;
     flex-direction: row;
     flex-flow: wrap;
 }
+
 .header-container > div {
     flex-grow: 1;
+}
+
+.error-container {
+    margin-top: 2em;
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+}
+.error-container > div {
+    display: block;
 }
 
 /* Logo */
 .logo-img {
     width: 150pt;
-    filter: sepia(100%) saturate(5) hue-rotate(0deg);
-    animation: rainbow 5s linear infinite;
 }
+
 @keyframes rainbow {
-    0% { filter: sepia(100%) saturate(10) hue-rotate(0deg); }
-    100% { filter: sepia(100%) saturate(10) hue-rotate(360deg); }
+    0% {
+        filter: sepia(100%) saturate(10) hue-rotate(0deg);
+    }
+    100% {
+        filter: sepia(100%) saturate(10) hue-rotate(360deg);
+    }
 }
 
 .logo {
-    animation: rainbow 5s linear infinite;
     font-weight: bold;
     font-size: 250%;
     white-space: nowrap;
 }
+
 .logo, .logo-img, .version {
     margin: 0;
     padding: 0;
     border: 0;
     display: inline-block;
 }
-.logo .start { color: var(--color-dark); }
-.logo .end { color: var(--color-light); }
+
+.logo .start {
+    color: var(--color-dark);
+}
+
+.logo .end {
+    color: var(--color-light);
+}
 
 .version {
     margin-top: -5pt;
-    animation-delay: 1000ms;
 }
+
 .version span {
-    font-size: 150%;
-    font-weight: bold;
-    color: var(--color-light);
+    font-size: 200%;
+    opacity: 75%;
 }
 
 /* Titles */
 h1, h2 {
-    /*font-size: 150%;*/
-    margin: 5pt 0;
-    padding: 0;
+    margin-top: .25em;
+    margin-bottom: .25em;
 }
+
+.logo, .version {
+    padding: 0;
+    font-family: "Tourney", sans-serif;
+    font-weight: normal;
+}
+
 code {
     color: var(--color-text);
     padding: 0 2pt;
     border-radius: 2pt;
 }
+
 .jetbrains img {
     filter: saturate(0);
 }
+
 .jetbrains:hover {
     background-color: transparent !important;
 }
+
 /* Boxes */
 .subcontainer {
     display: none;
 }
+
 .big {
     margin: 10pt 0;
     width: 500pt;
 }
+
 .medium {
     margin: 10pt 0;
     width: 250pt;
 }
+
 .box, .subcontainer {
     width: 500pt;
 }
+
 .box {
     box-sizing: border-box;
     padding: 5pt 10pt;
@@ -120,15 +160,18 @@ code {
     border: 4pt double var(--color-dark);
     background-color: var(--color-box-background);
 }
+
 .box p {
     margin: 5pt 0;
 }
+
 .button.box, .button.box > div {
     display: flex;
     align-content: center;
     justify-content: center;
     flex-flow: row wrap;
 }
+
 .button.box button {
     border: 1pt solid var(--color-light);
     border-radius: 10pt;
@@ -140,17 +183,21 @@ code {
     font-family: monospace;
     font-weight: bold;
 }
+
 .button.box button:hover {
     animation: rainbow 1s linear infinite;
     background-color: var(--color-darker);
 }
+
 button.active {
     background-color: var(--color-light) !important;
     color: var(--color-dark) !important;
 }
+
 .center-text {
     text-align: center;
 }
+
 .small-text {
     font-size: 85%;
 }
@@ -161,14 +208,17 @@ button.active {
     position: fixed;
     top: calc(50% - 260pt);
 }
+
 .logo-bg > img {
     opacity: 0.25;
     width: 520pt;
     height: 520pt;
 }
+
 .logo-bg.left {
     left: -260pt;
 }
+
 .logo-bg.right {
     right: -260pt;
 }
@@ -177,38 +227,47 @@ button.active {
 .box.left, .logo-container, .box.right {
     width: 25%;
 }
+
 @media (max-width: 520pt) {
     .big, .subcontainer {
         width: 100%;
     }
+
     .medium {
         width: 50%;
     }
+
     .header-container {
         width: 100%;
     }
+
     .logo-container {
         width: 100%;
         order: 1;
         margin-bottom: 5pt;
     }
+
     .box.left, .box.right {
         width: calc(50% - 20pt);
     }
+
     .box.left {
         order: 2;
         margin-top: 10pt;
     }
+
     .box.right {
         order: 3;
         margin-top: 10pt;
     }
 }
+
 @media (max-width: 320pt) {
     .box.left, .box.right {
         width: 100%;
     }
 }
+
 @media (min-width: 1040pt) {
     .logo-bg {
         display: block;
