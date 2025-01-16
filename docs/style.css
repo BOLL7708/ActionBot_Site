@@ -41,6 +41,20 @@ a:hover {
     transition: transform 500ms ease-in-out;
     animation: rainbow 5s linear infinite;
 }
+.logo-group {
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+.logo-group img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 150pt;
+}
 
 .header-container {
     display: flex;
@@ -63,10 +77,6 @@ a:hover {
 }
 
 /* Logo */
-.logo-img {
-    width: 150pt;
-}
-
 @keyframes rainbow {
     0% {
         filter: sepia(100%) saturate(10) hue-rotate(0deg);
@@ -104,6 +114,39 @@ a:hover {
 .version span {
     font-size: 200%;
     opacity: 75%;
+}
+
+@keyframes fadeCycle {
+    0% {
+        opacity: 0;
+    }
+    5% {
+        opacity: 0.5;
+    }
+    10% {
+        opacity: 0.5;
+    }
+    15% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.fade {
+    opacity: 0;
+    animation: fadeCycle 30s infinite;
+}
+
+#logo_top {
+    animation-delay: 36s;
+}
+#logo_middle {
+    animation-delay: 33s;
+}
+#logo_bottom {
+    animation-delay: 30s;
 }
 
 /* Titles */
