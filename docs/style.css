@@ -41,19 +41,23 @@ a:hover {
     transition: transform 500ms ease-in-out;
     animation: rainbow 5s linear infinite;
 }
+.logo-container:hover {
+    animation: rainbow 1s linear infinite;
+}
 .logo-group {
     position: relative;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    height: 100%;
+    width: 150pt;
+    height: 150pt;
 }
 .logo-group img {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 150pt;
+    width: 100%;
+    height: 100%;
 }
 
 .header-container {
@@ -264,6 +268,22 @@ button.active {
 
 .logo-bg.right {
     right: -260pt;
+}
+
+.thumb {
+    width: 24pt;
+    padding: 0 2pt;
+}
+.thumb.top {
+    margin-bottom: -12pt;
+}
+.thumb.middle {
+    margin-top: -5pt;
+    margin-bottom: -7pt;
+}
+.thumb.bottom {
+    margin-top: -8pt;
+    margin-bottom: -4pt;
 }
 
 /* Responsive */
