@@ -37,7 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var Site = /** @class */ (function () {
     function Site() {
     }
-    Site.run = function () {
+    Site.prototype.run = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -46,6 +46,7 @@ var Site = /** @class */ (function () {
                         this._infoLeft = document.querySelector('.box.left');
                         this.initNavigation();
                         this.setupElements();
+                        this.setupMermaid();
                         return [4 /*yield*/, this.loadReleaseData()];
                     case 1:
                         _a.sent();
@@ -57,7 +58,7 @@ var Site = /** @class */ (function () {
             });
         });
     };
-    Site.setupElements = function () {
+    Site.prototype.setupElements = function () {
         var _this = this;
         this._containerInfo = document.querySelector('#info_container');
         this._containerLinks = document.querySelector('#links_container');
@@ -67,13 +68,49 @@ var Site = /** @class */ (function () {
         this._buttonLinks = document.querySelector('#links_button');
         this._buttonReadMe = document.querySelector('#readme_button');
         this._buttonNotes = document.querySelector('#notes_button');
-        this._buttonInfo.onclick = function (e) { _this.toggle(_this.PAGE_INFO); };
-        this._buttonLinks.onclick = function (e) { _this.toggle(_this.PAGE_LINKS); };
-        this._buttonReadMe.onclick = function (e) { _this.toggle(_this.PAGE_README); };
-        this._buttonNotes.onclick = function (e) { _this.toggle(_this.PAGE_NOTES); };
+        this._buttonInfo.onclick = function (e) { _this.toggle(Site.PAGE_INFO); };
+        this._buttonLinks.onclick = function (e) { _this.toggle(Site.PAGE_LINKS); };
+        this._buttonReadMe.onclick = function (e) { _this.toggle(Site.PAGE_README); };
+        this._buttonNotes.onclick = function (e) { _this.toggle(Site.PAGE_NOTES); };
         this.toggle(window.location.hash.substring(1));
     };
-    Site.toggle = function (index, skipHistory) {
+    Site.prototype.setupMermaid = function () {
+        // Enable mermaid tagging in Marked
+        marked.use({
+            renderer: {
+                code: function (code) {
+                    if (code.lang == 'mermaid')
+                        return "<pre class=\"mermaid\">".concat(code.text, "</pre>");
+                    return "<pre>".concat(code.text, "</pre>");
+                }
+            }
+        });
+        // Mermaid is not run on launch but after each load of Markdown documents.
+        mermaid.initialize({
+            startOnLoad: false,
+            theme: 'dark'
+        });
+    };
+    Site.prototype.runMermaid = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var elements;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, mermaid.run()];
+                    case 1:
+                        _a.sent();
+                        elements = document.querySelectorAll('.mermaid p');
+                        elements.forEach(function (el) {
+                            var text = el.innerHTML;
+                            if (text.length)
+                                el.innerHTML = text.replace(/\\n/g, '<br/>');
+                        });
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    Site.prototype.toggle = function (index, skipHistory) {
         var pages = [Site.PAGE_INFO, Site.PAGE_LINKS, Site.PAGE_README, Site.PAGE_NOTES];
         if (pages.indexOf(index) == -1)
             index = Site.PAGE_INFO;
@@ -93,7 +130,7 @@ var Site = /** @class */ (function () {
         this._containerReadMe.style.display = index == Site.PAGE_README ? 'block' : 'none';
         this._containerNotes.style.display = index == Site.PAGE_NOTES ? 'block' : 'none';
     };
-    Site.toggleActive = function (button, on) {
+    Site.prototype.toggleActive = function (button, on) {
         if (on) {
             button.classList.add('active');
             // button.focus({ preventScroll: true }) // TODO: This didn't work anyway, still not sure how to solve the faulty highlight after navigating back on mobile.
@@ -101,7 +138,7 @@ var Site = /** @class */ (function () {
         else
             button.classList.remove('active');
     };
-    Site.initNavigation = function () {
+    Site.prototype.initNavigation = function () {
         var _this = this;
         window.onpopstate = function (e) {
             if (e.state && e.state.page) {
@@ -110,7 +147,7 @@ var Site = /** @class */ (function () {
             }
         };
     };
-    Site.loadReadMeData = function () {
+    Site.prototype.loadReadMeData = function () {
         return __awaiter(this, void 0, void 0, function () {
             var url, response, readme, text, html, blocks;
             return __generator(this, function (_a) {
@@ -132,12 +169,15 @@ var Site = /** @class */ (function () {
                     case 3:
                         readme.innerHTML = "<div class=\"big box\"><p>Failed to load README.md from GitHub.</p>";
                         _a.label = 4;
-                    case 4: return [2 /*return*/, true];
+                    case 4: return [4 /*yield*/, this.runMermaid()];
+                    case 5:
+                        _a.sent();
+                        return [2 /*return*/, true];
                 }
             });
         });
     };
-    Site.loadReleaseData = function () {
+    Site.prototype.loadReleaseData = function () {
         return __awaiter(this, void 0, void 0, function () {
             var cached, url, response, releases, latest, message, message;
             return __generator(this, function (_a) {
@@ -177,12 +217,15 @@ var Site = /** @class */ (function () {
                             this.setError(this._infoLeft, message);
                         }
                         _a.label = 4;
-                    case 4: return [2 /*return*/, true];
+                    case 4: return [4 /*yield*/, this.runMermaid()];
+                    case 5:
+                        _a.sent();
+                        return [2 /*return*/, true];
                 }
             });
         });
     };
-    Site.updateBoxes = function (release) {
+    Site.prototype.updateBoxes = function (release) {
         this.setInfo(this._infoLeft, [
             '<h2>Latest release</h2>',
             "<p>Link: <a href=\"".concat(release.html_url, "\">").concat(release.tag_name, "</a></p>"),
@@ -194,22 +237,22 @@ var Site = /** @class */ (function () {
             "<p>Profile: <a href=\"".concat(release.author.html_url, "\">").concat(release.author.login, "</a></p>"),
         ]);
     };
-    Site.setInfo = function (info, lines) {
+    Site.prototype.setInfo = function (info, lines) {
         info.innerHTML = '<p>' + lines.join('<p/><p>') + '</p>';
     };
-    Site.setError = function (element, message) {
+    Site.prototype.setError = function (element, message) {
         element.innerHTML = message !== null && message !== void 0 ? message : 'Failed to load release data from GitHub';
     };
-    Site.setCachedResponse = function (release) {
+    Site.prototype.setCachedResponse = function (release) {
         localStorage.setItem('release', JSON.stringify(release));
     };
-    Site.getCachedResponse = function () {
+    Site.prototype.getCachedResponse = function () {
         var text = localStorage.getItem('release');
         if (!text)
             return null;
         return JSON.parse(text);
     };
-    Site.updateNotes = function (releases) {
+    Site.prototype.updateNotes = function (releases) {
         var notes = document.querySelector('#notes_container');
         notes.innerHTML = releases.map(function (release) {
             var date = new Date(release.published_at).toISOString().split('T')[0];

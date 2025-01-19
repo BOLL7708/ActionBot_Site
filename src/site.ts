@@ -1,29 +1,30 @@
 export default class Site {
-    static _infoLeft: HTMLDivElement
     static readonly PAGE_INFO = 'info'
     static readonly PAGE_LINKS = 'links'
     static readonly PAGE_README = 'readme'
     static readonly PAGE_NOTES = 'notes'
-    static _containerInfo: HTMLDivElement
-    static _containerLinks: HTMLDivElement
-    static _containerReadMe: HTMLDivElement
-    static _containerNotes: HTMLDivElement
-    static _buttonInfo: HTMLButtonElement
-    static _buttonLinks: HTMLButtonElement
-    static _buttonReadMe: HTMLButtonElement
-    static _buttonNotes: HTMLButtonElement
-    static _currentIndex: string
+    _infoLeft: HTMLDivElement
+    _containerInfo: HTMLDivElement
+    _containerLinks: HTMLDivElement
+    _containerReadMe: HTMLDivElement
+    _containerNotes: HTMLDivElement
+    _buttonInfo: HTMLButtonElement
+    _buttonLinks: HTMLButtonElement
+    _buttonReadMe: HTMLButtonElement
+    _buttonNotes: HTMLButtonElement
+    _currentIndex: string
 
-    static async run() {
+    async run() {
         console.log('Site is running!')
         this._infoLeft = document.querySelector('.box.left') as HTMLDivElement
         this.initNavigation()
         this.setupElements()
+        this.setupMermaid()
         await this.loadReleaseData()
         await this.loadReadMeData()
         return void 0
     }
-    static setupElements() {
+    private setupElements() {
         this._containerInfo = document.querySelector('#info_container') as HTMLDivElement
         this._containerLinks = document.querySelector('#links_container') as HTMLDivElement
         this._containerReadMe = document.querySelector('#readme_container') as HTMLDivElement
@@ -33,15 +34,40 @@ export default class Site {
         this._buttonLinks = document.querySelector('#links_button') as HTMLButtonElement
         this._buttonReadMe = document.querySelector('#readme_button') as HTMLButtonElement
         this._buttonNotes = document.querySelector('#notes_button') as HTMLButtonElement
-        this._buttonInfo.onclick = (e) => {this.toggle(this.PAGE_INFO)}
-        this._buttonLinks.onclick = (e) => {this.toggle(this.PAGE_LINKS)}
-        this._buttonReadMe.onclick = (e) => {this.toggle(this.PAGE_README)}
-        this._buttonNotes.onclick = (e) => {this.toggle(this.PAGE_NOTES)}
+        this._buttonInfo.onclick = (e) => {this.toggle(Site.PAGE_INFO)}
+        this._buttonLinks.onclick = (e) => {this.toggle(Site.PAGE_LINKS)}
+        this._buttonReadMe.onclick = (e) => {this.toggle(Site.PAGE_README)}
+        this._buttonNotes.onclick = (e) => {this.toggle(Site.PAGE_NOTES)}
 
         this.toggle(window.location.hash.substring(1))
     }
 
-    private static toggle(index: string, skipHistory?: boolean) {
+    private setupMermaid() {
+        // Enable mermaid tagging in Marked
+        marked.use({
+            renderer: {
+                code: function (code: {lang: string, text: string}) {
+                    if (code.lang == 'mermaid') return `<pre class="mermaid">${code.text}</pre>`;
+                    return `<pre>${code.text}</pre>`;
+                }
+            }
+        })
+        // Mermaid is not run on launch but after each load of Markdown documents.
+        mermaid.initialize({
+            startOnLoad: false,
+            theme: 'dark'
+        })
+    }
+    private async runMermaid() {
+        await mermaid.run()
+        const elements = document.querySelectorAll('.mermaid p')
+        elements.forEach((el)=>{
+            const text = el.innerHTML
+            if(text.length) el.innerHTML = text.replace(/\\n/g, '<br/>')
+        })
+    }
+
+    private toggle(index: string, skipHistory?: boolean) {
         const pages = [Site.PAGE_INFO, Site.PAGE_LINKS, Site.PAGE_README, Site.PAGE_NOTES]
         if(pages.indexOf(index) == -1) index = Site.PAGE_INFO
         if(this._currentIndex == index) return
@@ -59,7 +85,7 @@ export default class Site {
         this._containerReadMe.style.display = index == Site.PAGE_README ? 'block' : 'none'
         this._containerNotes.style.display = index == Site.PAGE_NOTES ? 'block' : 'none'
     }
-    private static toggleActive(button: HTMLButtonElement, on: boolean) {
+    private toggleActive(button: HTMLButtonElement, on: boolean) {
         if(on) {
             button.classList.add('active')
             // button.focus({ preventScroll: true }) // TODO: This didn't work anyway, still not sure how to solve the faulty highlight after navigating back on mobile.
@@ -67,7 +93,7 @@ export default class Site {
         else button.classList.remove('active')
     }
 
-    static initNavigation() {
+    private initNavigation() {
         window.onpopstate = (e) => {
             if(e.state && e.state.page) {
                 console.log('Returning to: '+e.state.page)
@@ -75,7 +101,7 @@ export default class Site {
             }
         }
     }
-    static async loadReadMeData() {
+    private async loadReadMeData() {
         const url = 'https://raw.githubusercontent.com/boll7708/ActionBot/master/README.md'
         const response = await fetch(url)
         const readme = document.querySelector('#readme_container') as HTMLDivElement
@@ -87,9 +113,10 @@ export default class Site {
         } else {
             readme.innerHTML = `<div class="big box"><p>Failed to load README.md from GitHub.</p>`
         }
+        await this.runMermaid()
         return true
     }
-    static async loadReleaseData() {
+    private async loadReleaseData() {
         const cached = this.getCachedResponse()
         if(cached) {
             console.log('Using cached release!')
@@ -118,9 +145,10 @@ export default class Site {
                 this.setError(this._infoLeft, message)
             }
         }
+        await this.runMermaid()
         return true
     }
-    static updateBoxes(release: IRelease) {
+    private updateBoxes(release: IRelease) {
         this.setInfo(this._infoLeft, [
             '<h2>Latest release</h2>',
             `<p>Link: <a href="${release.html_url}">${release.tag_name}</a></p>`,
@@ -132,21 +160,21 @@ export default class Site {
             `<p>Profile: <a href="${release.author.html_url}">${release.author.login}</a></p>`,
         ])
     }
-    static setInfo(info: HTMLDivElement, lines: string[]) {
+    private setInfo(info: HTMLDivElement, lines: string[]) {
         info.innerHTML = '<p>'+lines.join('<p/><p>')+'</p>'
     }
-    static setError(element: HTMLDivElement, message?: string) {
+    private setError(element: HTMLDivElement, message?: string) {
         element.innerHTML = message ?? 'Failed to load release data from GitHub'
     }
-    static setCachedResponse(release: IRelease) {
+    private setCachedResponse(release: IRelease) {
         localStorage.setItem('release', JSON.stringify(release))
     }
-    static getCachedResponse(): IRelease|null {
+    private getCachedResponse(): IRelease|null {
         const text = localStorage.getItem('release')
         if(!text) return null
         return JSON.parse(text) as IRelease
     }
-    static updateNotes(releases: IRelease[]) {
+    private updateNotes(releases: IRelease[]) {
         const notes = document.querySelector('#notes_container') as HTMLDivElement
         notes.innerHTML = releases.map(release => {
             const date = new Date(release.published_at).toISOString().split('T')[0]

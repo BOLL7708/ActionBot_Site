@@ -3,7 +3,8 @@
     "module": "ESNext",
     "target": "ES5",
     "sourceMap": true,
-    "outDir": "docs/_scripts"
+    "outDir": "docs/_scripts",
+    "lib": ["es2015", "dom"]
   },
     "include": [
         "src/**/*"

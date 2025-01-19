@@ -3,6 +3,7 @@
 <head>
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="_media/actionbot_icon.svg"/>
     <!-- Embed -->
@@ -65,9 +66,9 @@
         </div>
         <div class="big box">
             <h1>History</h1>
-            <p>2021: This project was first called <em>Streaming Widget</em>, as it was a simple browser source in OBS that could play back audio and show media on the screen.</p>
-            <p>2023: Over time, the scope of the project expanded to such a degree that it was no longer suitable to be called a widget, so it was rebranded as a bot named <em>desbot</em>. It was still running as a single browser source.</p>
-            <p>2024: The project was ported from running in the browser to a standalone JavaScript runtime, with this there was another rebranding to <em>ActionBot</em>, to signify this major change of the project structure and functionality.</p>
+            <p><strong>2021</strong>: This project was first called <em>Streaming Widget</em>, as it was a simple browser source in OBS that could play back audio and show media on the screen.</p>
+            <p><strong>2023</strong>: Over time, the scope of the project expanded to such a degree that it was no longer suitable to be called a widget, so it was rebranded as a bot named <em>desbot</em>. It was still running as a single browser source.</p>
+            <p><strong>2024</strong>: A decision was made to port the project from running in the browser to a standalone JavaScript runtime, with this there was another rebranding to <em>ActionBot</em>, to signify this major change of the project structure and functionality.</p>
         </div>
         <div class="big box">
             <h1>Present Form</h1>
@@ -86,13 +87,14 @@
         </div>
         <div class="big box">
             <h1>Current Work</h1>
-            <p>Porting of the bot to run in <a href="https://deno.com/">Deno</a>. This is an ongoing process and it's slowly progressing. It will involve rewriting parts of the core, adopting third party libraries, as well as making new bespoke components like a presenter that will replace the current widget component. Finally, the editor will be remade with <a href="https://vuejs.org/">Vue</a>.</p>
-        </div>
-        <div class="big box">
-            <h1>Future Plans</h1>
-            <p>There will be a transition from running as a webpage requiring a local webserver with PHP and MySQL to running only in <a href="https://deno.com/">Deno</a>, this as a majority of the existing code is the backend that handles all I/O, so it does not need the browser client.</p>
-            <p>There will still be one or more components that are loaded as browser sources, but those will be loaded from the Deno instance and will only be for presentation; to provide overlay elements, video and audio playback.</p>
-            <p>This will include moving away from PHP as the page templating system, before this happens the current code base will be worked into a stable working state though, as it is a quite disruptive update.</p>
+            <p>Porting of the bot to run in <a href="https://deno.com/">Deno</a>.
+            <ul>
+                <li>The porting has started in earnest, with the decision to go for Deno and Vue as the core runtime and framework for backend and frontend respectively.</li>
+                <li>One of the main tasks worked on so far has been to split the old code up between runtime and browser, which before this was one and the same.</li>
+                <li>What is going to happen next, is the adoption of third party libraries for API interactions, so I can offload that part of the project maintenance on those libraries.</li>
+                <li>When a minimally viable port has been made, probably only with TTS and chat logging, I will try to recreate the editor using <a href="https://vuejs.org/">Vue.js</a>.</li>
+                <li>Lastly comes the rest of the logic, to get back to feature parity and beyond.</li>
+            </ul>
         </div>
         <div class="big box">
             <h1>Brand Explained</h1>
@@ -144,7 +146,11 @@
 </div>
 <script type="module">
     import Site from './_scripts/site.js'
-    Site.run()
+    const body = document.querySelector('body')
+    body.onload = ()=>{
+        const site = new Site()
+        site.run()
+    }
 </script>
 </body>
 </html>
