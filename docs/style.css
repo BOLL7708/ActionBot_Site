@@ -120,37 +120,9 @@ a:hover {
     opacity: 75%;
 }
 
-@keyframes fadeCycle {
-    0% {
-        opacity: 0;
-    }
-    5% {
-        opacity: 0.5;
-    }
-    10% {
-        opacity: 0.5;
-    }
-    15% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 0;
-    }
-}
-
 .fade {
     opacity: 0;
-    animation: fadeCycle 30s infinite;
-}
-
-#logo_top {
-    animation-delay: 36s;
-}
-#logo_middle {
-    animation-delay: 33s;
-}
-#logo_bottom {
-    animation-delay: 30s;
+    transition: opacity 0.25s ease-in-out;
 }
 
 /* Titles */

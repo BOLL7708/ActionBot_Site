@@ -4,6 +4,10 @@ export default class Site {
     static readonly PAGE_README = 'readme'
     static readonly PAGE_NOTES = 'notes'
     _infoLeft: HTMLDivElement
+    _logoGroup: HTMLDivElement
+    _logoTop: HTMLImageElement
+    _logoMiddle: HTMLImageElement
+    _logoBottom: HTMLImageElement
     _infoRight: HTMLDivElement
     _containerInfo: HTMLDivElement
     _containerLinks: HTMLDivElement
@@ -15,17 +19,16 @@ export default class Site {
     _buttonNotes: HTMLButtonElement
     _footerYear: HTMLSpanElement
     _currentIndex: string
+    _logoHeight: number
 
     async run() {
         console.log('Site is running!')
-        this._infoLeft = document.querySelector('.box.left') as HTMLDivElement
-        this._infoRight = document.querySelector('.box.right') as HTMLDivElement
+
         this.initNavigation()
         this.setupElements()
         this.setupMermaid()
         await this.loadReleaseData()
         await this.loadReadMeData()
-        this._footerYear.innerHTML = `${new Date().getFullYear()}`
         return void 0
     }
     private setupElements() {
@@ -33,6 +36,17 @@ export default class Site {
         this._containerLinks = document.querySelector('#links_container') as HTMLDivElement
         this._containerReadMe = document.querySelector('#readme_container') as HTMLDivElement
         this._containerNotes = document.querySelector('#notes_container') as HTMLDivElement
+
+        this._infoLeft = document.querySelector('.box.left') as HTMLDivElement
+        this._logoGroup = document.querySelector('.logo-group') as HTMLDivElement
+        this._logoTop = document.querySelector('#logo_top') as HTMLImageElement
+        this._logoMiddle = document.querySelector('#logo_middle') as HTMLImageElement
+        this._logoBottom = document.querySelector('#logo_bottom') as HTMLImageElement
+        this._infoRight = document.querySelector('.box.right') as HTMLDivElement
+        this._logoGroup.onmousemove = this.logoMouseOver.bind(this)
+        this._logoGroup.onmouseover = this.logoMouseOver.bind(this)
+        this._logoGroup.onmouseleave = this.logoMouseOver.bind(this)
+        this._logoHeight = this._logoGroup.clientHeight
 
         this._buttonInfo = document.querySelector('#info_button') as HTMLButtonElement
         this._buttonLinks = document.querySelector('#links_button') as HTMLButtonElement
@@ -43,6 +57,7 @@ export default class Site {
         this._buttonReadMe.onclick = (e) => {this.toggle(Site.PAGE_README)}
         this._buttonNotes.onclick = (e) => {this.toggle(Site.PAGE_NOTES)}
         this._footerYear = document.querySelector('#footer_year') as HTMLSpanElement
+        this._footerYear.innerHTML = `${new Date().getFullYear()}`
 
         this.toggle(window.location.hash.substring(1))
     }
@@ -188,6 +203,38 @@ export default class Site {
             const date = new Date(release.published_at).toISOString().split('T')[0]
             return `<div class="big box">${date} <a href="${release.html_url}" target="_blank">${release.tag_name}</a> <strong>${release.name}</strong><hr/>${marked.parse(release.body)}</div>`
         }).join('')
+    }
+
+    private logoMouseOver(ev: MouseEvent) {
+        switch(ev.type) {
+            case 'mousemove':
+                const y = ev.layerY
+                const h = this._logoHeight
+                if(y < h/3) {
+                    this._logoTop.style.opacity = '0.5'
+                    this._logoMiddle.style.opacity = '0'
+                    this._logoBottom.style.opacity = '0'
+                } else if(y > h/3 && y < h*2/3) {
+                    this._logoTop.style.opacity = '0'
+                    this._logoMiddle.style.opacity = '0.5'
+                    this._logoBottom.style.opacity = '0'
+                } else if(y > h*2/3) {
+                    this._logoTop.style.opacity = '0'
+                    this._logoMiddle.style.opacity = '0'
+                    this._logoBottom.style.opacity = '0.5'
+                }
+                break
+            case 'mouseover':
+                this._logoTop.style.opacity = '0'
+                this._logoMiddle.style.opacity = '0'
+                this._logoBottom.style.opacity = '0'
+                break
+            case 'mouseleave':
+                this._logoTop.style.opacity = ''
+                this._logoMiddle.style.opacity = ''
+                this._logoBottom.style.opacity = ''
+                break
+        }
     }
 }
 

@@ -8,8 +8,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g = Object.create((typeof Iterator === "function" ? Iterator : Object).prototype);
+    return g.next = verb(0), g["throw"] = verb(1), g["return"] = verb(2), typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
@@ -43,8 +43,6 @@ var Site = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         console.log('Site is running!');
-                        this._infoLeft = document.querySelector('.box.left');
-                        this._infoRight = document.querySelector('.box.right');
                         this.initNavigation();
                         this.setupElements();
                         this.setupMermaid();
@@ -54,7 +52,6 @@ var Site = /** @class */ (function () {
                         return [4 /*yield*/, this.loadReadMeData()];
                     case 2:
                         _a.sent();
-                        this._footerYear.innerHTML = "".concat(new Date().getFullYear());
                         return [2 /*return*/, void 0];
                 }
             });
@@ -66,6 +63,16 @@ var Site = /** @class */ (function () {
         this._containerLinks = document.querySelector('#links_container');
         this._containerReadMe = document.querySelector('#readme_container');
         this._containerNotes = document.querySelector('#notes_container');
+        this._infoLeft = document.querySelector('.box.left');
+        this._logoGroup = document.querySelector('.logo-group');
+        this._logoTop = document.querySelector('#logo_top');
+        this._logoMiddle = document.querySelector('#logo_middle');
+        this._logoBottom = document.querySelector('#logo_bottom');
+        this._infoRight = document.querySelector('.box.right');
+        this._logoGroup.onmousemove = this.logoMouseOver.bind(this);
+        this._logoGroup.onmouseover = this.logoMouseOver.bind(this);
+        this._logoGroup.onmouseleave = this.logoMouseOver.bind(this);
+        this._logoHeight = this._logoGroup.clientHeight;
         this._buttonInfo = document.querySelector('#info_button');
         this._buttonLinks = document.querySelector('#links_button');
         this._buttonReadMe = document.querySelector('#readme_button');
@@ -75,6 +82,7 @@ var Site = /** @class */ (function () {
         this._buttonReadMe.onclick = function (e) { _this.toggle(Site.PAGE_README); };
         this._buttonNotes.onclick = function (e) { _this.toggle(Site.PAGE_NOTES); };
         this._footerYear = document.querySelector('#footer_year');
+        this._footerYear.innerHTML = "".concat(new Date().getFullYear());
         this.toggle(window.location.hash.substring(1));
     };
     Site.prototype.setupMermaid = function () {
@@ -264,6 +272,39 @@ var Site = /** @class */ (function () {
             var date = new Date(release.published_at).toISOString().split('T')[0];
             return "<div class=\"big box\">".concat(date, " <a href=\"").concat(release.html_url, "\" target=\"_blank\">").concat(release.tag_name, "</a> <strong>").concat(release.name, "</strong><hr/>").concat(marked.parse(release.body), "</div>");
         }).join('');
+    };
+    Site.prototype.logoMouseOver = function (ev) {
+        switch (ev.type) {
+            case 'mousemove':
+                var y = ev.layerY;
+                var h = this._logoHeight;
+                if (y < h / 3) {
+                    this._logoTop.style.opacity = '0.5';
+                    this._logoMiddle.style.opacity = '0';
+                    this._logoBottom.style.opacity = '0';
+                }
+                else if (y > h / 3 && y < h * 2 / 3) {
+                    this._logoTop.style.opacity = '0';
+                    this._logoMiddle.style.opacity = '0.5';
+                    this._logoBottom.style.opacity = '0';
+                }
+                else if (y > h * 2 / 3) {
+                    this._logoTop.style.opacity = '0';
+                    this._logoMiddle.style.opacity = '0';
+                    this._logoBottom.style.opacity = '0.5';
+                }
+                break;
+            case 'mouseover':
+                this._logoTop.style.opacity = '0';
+                this._logoMiddle.style.opacity = '0';
+                this._logoBottom.style.opacity = '0';
+                break;
+            case 'mouseleave':
+                this._logoTop.style.opacity = '';
+                this._logoMiddle.style.opacity = '';
+                this._logoBottom.style.opacity = '';
+                break;
+        }
     };
     Site.PAGE_INFO = 'info';
     Site.PAGE_LINKS = 'links';
