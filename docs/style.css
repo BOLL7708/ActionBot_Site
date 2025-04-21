@@ -249,6 +249,11 @@ button.active {
     font-size: 85%;
 }
 
+.avatar {
+    width: 100%;
+    max-width: 136pt;
+}
+
 /* Background */
 .logo-bg {
     display: none;
@@ -312,6 +317,7 @@ button.active {
 
     .box.left, .box.right {
         width: calc(50% - 20pt);
+        text-align: center;
     }
 
     .box.left {
@@ -328,6 +334,7 @@ button.active {
 @media (max-width: 320pt) {
     .box.left, .box.right {
         width: 100%;
+        text-align: center;
     }
 }
 

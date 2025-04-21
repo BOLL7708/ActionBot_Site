@@ -44,6 +44,7 @@ var Site = /** @class */ (function () {
                     case 0:
                         console.log('Site is running!');
                         this._infoLeft = document.querySelector('.box.left');
+                        this._infoRight = document.querySelector('.box.right');
                         this.initNavigation();
                         this.setupElements();
                         this.setupMermaid();
@@ -53,6 +54,7 @@ var Site = /** @class */ (function () {
                         return [4 /*yield*/, this.loadReadMeData()];
                     case 2:
                         _a.sent();
+                        this._footerYear.innerHTML = "".concat(new Date().getFullYear());
                         return [2 /*return*/, void 0];
                 }
             });
@@ -72,6 +74,7 @@ var Site = /** @class */ (function () {
         this._buttonLinks.onclick = function (e) { _this.toggle(Site.PAGE_LINKS); };
         this._buttonReadMe.onclick = function (e) { _this.toggle(Site.PAGE_README); };
         this._buttonNotes.onclick = function (e) { _this.toggle(Site.PAGE_NOTES); };
+        this._footerYear = document.querySelector('#footer_year');
         this.toggle(window.location.hash.substring(1));
     };
     Site.prototype.setupMermaid = function () {
@@ -233,7 +236,10 @@ var Site = /** @class */ (function () {
             '<p>Date: ' + new Date(release.published_at).toISOString().split('T')[0] + '</p>',
             '<p>Pre-release: ' + (release.prerelease ? 'Yes' : 'No') + '</p>',
             "<p>Source: <a href=\"".concat(release.zipball_url, "\">.zip</a>, <a href=\"").concat(release.tarball_url, "\">.tar</a></p>"),
+        ]);
+        this.setInfo(this._infoRight, [
             '<h2>Maintainer</h2>',
+            "<img src=\"".concat(release.author.avatar_url, "\" alt=\"Avatar\" class=\"avatar\">"),
             "<p>Profile: <a href=\"".concat(release.author.html_url, "\">").concat(release.author.login, "</a></p>"),
         ]);
     };

@@ -4,6 +4,7 @@ export default class Site {
     static readonly PAGE_README = 'readme'
     static readonly PAGE_NOTES = 'notes'
     _infoLeft: HTMLDivElement
+    _infoRight: HTMLDivElement
     _containerInfo: HTMLDivElement
     _containerLinks: HTMLDivElement
     _containerReadMe: HTMLDivElement
@@ -12,16 +13,19 @@ export default class Site {
     _buttonLinks: HTMLButtonElement
     _buttonReadMe: HTMLButtonElement
     _buttonNotes: HTMLButtonElement
+    _footerYear: HTMLSpanElement
     _currentIndex: string
 
     async run() {
         console.log('Site is running!')
         this._infoLeft = document.querySelector('.box.left') as HTMLDivElement
+        this._infoRight = document.querySelector('.box.right') as HTMLDivElement
         this.initNavigation()
         this.setupElements()
         this.setupMermaid()
         await this.loadReleaseData()
         await this.loadReadMeData()
+        this._footerYear.innerHTML = `${new Date().getFullYear()}`
         return void 0
     }
     private setupElements() {
@@ -38,6 +42,7 @@ export default class Site {
         this._buttonLinks.onclick = (e) => {this.toggle(Site.PAGE_LINKS)}
         this._buttonReadMe.onclick = (e) => {this.toggle(Site.PAGE_README)}
         this._buttonNotes.onclick = (e) => {this.toggle(Site.PAGE_NOTES)}
+        this._footerYear = document.querySelector('#footer_year') as HTMLSpanElement
 
         this.toggle(window.location.hash.substring(1))
     }
@@ -156,7 +161,10 @@ export default class Site {
             '<p>Date: '+new Date(release.published_at).toISOString().split('T')[0]+'</p>',
             '<p>Pre-release: '+(release.prerelease ? 'Yes' : 'No')+'</p>',
             `<p>Source: <a href="${release.zipball_url}">.zip</a>, <a href="${release.tarball_url}">.tar</a></p>`,
+        ])
+        this.setInfo(this._infoRight, [
             '<h2>Maintainer</h2>',
+            `<img src="${release.author.avatar_url}" alt="Avatar" class="avatar">`,
             `<p>Profile: <a href="${release.author.html_url}">${release.author.login}</a></p>`,
         ])
     }
