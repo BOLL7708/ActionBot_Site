@@ -41,9 +41,7 @@ a:hover {
     transition: transform 500ms ease-in-out;
     animation: rainbow 5s linear infinite;
 }
-.logo-container:hover {
-    animation: rainbow 1s linear infinite;
-}
+
 .logo-group {
     position: relative;
     justify-content: center;
@@ -51,6 +49,7 @@ a:hover {
     width: 150pt;
     height: 150pt;
 }
+
 .logo-group img {
     position: absolute;
     left: 50%;
@@ -76,6 +75,7 @@ a:hover {
     align-items: center;
     flex-flow: column;
 }
+
 .error-container > div {
     display: block;
 }
@@ -251,13 +251,16 @@ button.active {
     width: 24pt;
     padding: 0 2pt;
 }
+
 .thumb.top {
     margin-bottom: -12pt;
 }
+
 .thumb.middle {
     margin-top: -5pt;
     margin-bottom: -7pt;
 }
+
 .thumb.bottom {
     margin-top: -8pt;
     margin-bottom: -4pt;
